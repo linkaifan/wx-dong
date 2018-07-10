@@ -1,0 +1,72 @@
+/* pages/freeze/home.wxss */
+#home{
+  font-size: 12px;
+  text-align: center;
+}
+/* 顶部搜索栏 */
+.search{
+  display: flex;
+}
+/* banner轮播图 */
+.slide-image{
+  height: 37vh;
+  width: 100%;
+}
+/* 分类区 */
+.type{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.type-box{
+  margin-top: 15rpx;
+}
+.type-icon{
+  width: 18vw;
+  height: 18vw;
+  border-radius: 50%;
+  display: block;
+  background-color: #ff3c4d;
+}
+/* 专区入口 */
+.goods{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.good{
+  text-align: left;
+  border: 1px solid #aea794;
+  margin-top: 15rpx;
+  background-color: #fff;
+}
+.good-img{
+  width: 30vw;
+  height: 30vw;
+}
+.discount{
+  background-color: #f6c447;
+  padding-bottom: 15rpx;
+}
+.recommendation{
+  background-color: #489cf4;
+  padding-bottom: 15rpx;
+}
+.D-title,.R-title{
+  padding-top: 15rpx;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.D-title{
+  color: #ee000d;
+}
+.R-title{
+  color:#fff;
+}
+.D-icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 5rpx;
+}

@@ -1,0 +1,96 @@
+<!--pages/me/me.wxml-->
+<view id="me">
+  <view class="head">
+    <image src="../../assets/me/head.png" class="head-img" />
+    <view class="head-t">
+      <view>用户：</view>
+      <view>1552****66</view>
+    </view>
+    <image src="../../assets/me/setting.png" class="head-icon" />
+  </view>
+  <view class="contain {{isShow?'blur':''}}" >
+    <view class="order">
+      <view class="o-title">
+        <text class="o-T">我的订单</text>
+        <text class="o-t">查看全部 ></text>
+      </view>
+      <view class="nav">
+        <view class="o-item">
+          <image src="../../assets/me/pay.png" class="nav-icon" />
+          <view>待付款</view> 
+        </view>
+        <view class="o-item">
+          <image src="../../assets/me/wait.png" class="nav-icon" />
+          <view>待发货</view>
+        </view>
+        <view class="o-item">
+          <image src="../../assets/me/take.png" class="nav-icon" />
+          <view>待收货</view>
+        </view>
+        <view class="o-item">
+          <image src="../../assets/me/com.png" class="nav-icon" />
+          <view>已完结</view>
+        </view>
+        <view class="o-item">
+          <image src="../../assets/me/fail.png" class="nav-icon" />
+          <view>已失效</view>
+        </view>
+      </view>
+    </view>
+    <view class="divide"></view>
+    <view class="address">
+      <view class="o-title">
+        <text class="o-T">配送地址</text>
+        <text class="o-t" bindtap="showWrap" data-index="-1">新增地址 ></text>
+      </view>
+      <view class="a-box" wx:for="{{addressItems}}" wx:key="index">
+        <view class="a-info">
+          <view class="a-t">
+            <text>{{item.contact}}</text>
+            <text>{{item.phone}}</text>
+          </view>
+          <view class="t-sm">{{item.address}}</view>
+        </view>
+        <view class="a-btnBox">
+          <view class="btn-left">
+            <radio-group class="radio-group" bindchange="radioChange">
+              <label>
+               <radio value="{{index}}" checked="{{item.isChecked}}" color=" #0297fe"/>
+              </label>
+            </radio-group>
+            <text hidden="{{item.isChecked}}">设置为默认地址</text>
+            <text hidden="{{!item.isChecked}}">默认地址</text>
+          </view>
+          <view class="btn-right">
+            <button class="a-btn" bindtap="showWrap" data-index="{{index}}">编辑</button>
+            <button class="a-btn">删除</button>
+          </view>
+        </view>
+        <view class="divide"></view>
+      </view>
+    </view>
+  </view>
+  <!-- 弹出wrap记得禁止滚动 -->
+  <view class="wrap" hidden="{{!isShow}}">
+    <view class="editBox">
+      <image class="close-icon" src="../../assets/close.png" bindtap="close" />
+      <input bindinput="bindKeyInput" placeholder="收货人姓名" data-key="contact"
+      type="text" confirm-type="next"/>
+      <view class="line"></view>
+      <input bindinput="bindKeyInput" placeholder="手机号码" data-key="phone" 
+      type="number" confirm-type="next"/>
+      <view class="line"></view>
+      <picker mode="region" class="region" value="{{detail.place}}"
+      bindchange="bindRegionChange" >
+        <view class="picker">
+          地址选择：{{detail.place[0]}}-{{detail.place[1]}}-{{detail.place[2]}}
+        </view>
+      </picker>
+      <view class="line"></view>
+      <textarea bindinput="bindKeyInput" placeholder="详细地址" class="textarea"
+      type="text" confirm-type="done"  data-key="address"/>
+      <button class="complete">保存</button>
+    </view>
+  </view>
+
+</view>

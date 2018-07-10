@@ -1,0 +1,62 @@
+<!-- pages/freeze/home.wxml -->
+<view id="home">
+  <view class="search">
+    <view class="address">海口市</view>
+    <input type="text" placeholder="请输入商品名称" />
+  </view>
+  <view class="banner">
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+      <block wx:for="{{banners}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="type">
+    <view class="type-box" wx:for="{{types}}" wx:key="index">
+      <image src="{{item.src}}" class="type-icon" />
+      <view>{{item.name}}</view>
+    </view>
+  </view>
+  <view class="zone">
+    <view class="discount">
+      <view class="D-title">
+        <image src="../../assets/home/hot.png" class="D-icon" />
+        人气热销
+      </view>
+      <view class="goods">
+        <view class="good" wx:for="{{discounts}}" wx:key="index">
+          <image src="{{item.img}}" class="good-img" />
+          <view class="g-name">{{item.name}}</view>
+          <view class="g-seller">{{item.seller}}</view>
+          <view class="g-weight">{{item.weight}}</view>
+          <view class="g-price">{{item.price}} 元</view>
+        </view>
+      </view>
+      <view class="D-title">
+        <image src="../../assets/home/click.png" class="D-icon" />
+        查看更多
+      </view>
+    </view>
+    <view class="recommendation">
+      <view class="R-title">
+        <image src="../../assets/home/Re.png" class="D-icon" />
+        精品推荐
+      </view>
+      <view class="goods">
+        <view class="good" wx:for="{{recommendations}}" wx:key="index">
+          <image src="{{item.img}}" class="good-img" />
+          <view class="g-name">{{item.name}}</view>
+          <view class="g-seller">{{item.seller}}</view>
+          <view class="g-weight">{{item.weight}}</view>
+          <view class="g-price">{{item.price}} 元</view>
+        </view>
+      </view>
+      <view class="R-title">
+        <image src="../../assets/home/click2.png" class="D-icon" />
+        查看更多
+      </view>
+    </view>
+  </view>
+</view>

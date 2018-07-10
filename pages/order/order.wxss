@@ -1,0 +1,61 @@
+/* pages/order/order.wxss */
+#order{
+  min-height: 100vh;
+  background-color: #f0eff5;
+  font-size: 13px;
+}
+.nav{
+  background-color: #fff;
+  text-align: center;
+  display: flex;
+  font-size: 12px;
+  height: 70rpx;
+  line-height: 70rpx;
+  margin-bottom: 20rpx;
+}
+.nav-item{
+  width: 20vh;
+}
+.nav-active{
+  color: #0297fe;
+  border-bottom: 2px solid #0297fe;
+}
+/* 待收货 */
+.takeBox{
+  background-color: #fff;
+  padding-bottom: 30rpx;
+  padding-top: 10rpx;
+}
+.takeBox-head{
+  height: 70rpx;
+  line-height: 70rpx;
+}
+.takeBox-mid{
+  background-color: #f5f5f5;
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.takeBox-info{
+  flex-grow: 1;
+}
+.takeBox-img{
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 30rpx;
+}
+.takeBox-foot{
+  padding: 10rpx;
+  padding-bottom: 0;
+  text-align: right;
+}
+.takeBox-btn{
+  width: 130rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border: 1px solid #fe0000;
+  color: #fe0000;
+  display: inline-block;
+  text-align: center;
+  border-radius: 3px;
+}

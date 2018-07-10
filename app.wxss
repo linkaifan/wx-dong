@@ -1,0 +1,29 @@
+/**app.wxss**/
+.contain{
+  padding: 0 40rpx;
+}
+.line{
+  height: 1px;
+  margin: 20rpx 0;
+  background-color: #e7e7e7;
+}
+.t-red{
+  color: #fe0000;
+}
+.df{
+  display: flex;
+  align-items: center;
+}
+.df-sb{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.df-sa{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;  
+}
+.t-bold{
+  font-weight: 600;
+}

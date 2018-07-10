@@ -1,0 +1,136 @@
+/* pages/me/me.wxss */
+#me{
+  font-size: 12px;
+}
+/* 信息栏 */
+.head{
+  background-color: #0297fe;
+  display: flex;
+  padding: 40rpx;
+  align-items:center;
+  margin-bottom: 40rpx;
+}
+.head-img{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  margin-right: 40rpx;
+}
+.head-icon{
+  width: 60rpx;
+  height: 60rpx;
+}
+.head-t{
+  flex-grow: 1;
+  color: #fff;
+  font-size: 14px;
+}
+/* 我的订单 */
+.o-title{
+  padding-bottom: 40rpx ;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  align-items: center;
+  color: #aeaeae;
+}
+.o-T{
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+.nav{
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.o-item{
+  width: 16vw;
+}
+.nav-icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 10rpx;
+}
+.divide{
+  margin: 40rpx 0;
+  background-color: #e7e7e7;
+  height: 1px;
+}
+/* 地址 */
+.address{
+  font-size: 13px;
+}
+.a-t,.a-btnBox{
+  display: flex;
+  justify-content: space-between;
+}
+.t-sm{
+  font-size: 11px;
+  margin: 10rpx 0;
+}
+.btn-left{
+  display: flex;
+  align-items: center;
+}
+.a-btn{
+  display: inline-block;
+  width: 120rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  font-size: 12px;
+}
+/* 点击编辑以及新增弹出的窗口 */
+.wrap{
+  position: absolute;
+  top: 0;left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  background-color:rgba(223, 223, 223, 0.4);
+}
+/* 设置模糊 */
+.blur{
+  filter: blur(3px);
+}
+.editBox{
+  width: 500rpx;
+  height: 650rpx;
+  position: relative;
+  margin: 100rpx auto;
+  padding: 130rpx 60rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  font-size: 14px;
+}
+.close-icon{
+  width: 30rpx;
+  height: 30rpx;
+  display: block;
+  position: absolute;
+  right: 40rpx;
+  top: 40rpx;
+}
+.region{
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.complete{
+  margin-top: 60rpx;
+  width: 300rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #0297fe;
+  color: #fff;
+  font-size: 14px;
+}
+.textarea{
+  width: 500rpx;
+}
+radio .wx-radio-input{
+  border-radius: 50%;/* 圆角 */
+  width: 40rpx;
+  height: 40rpx;
+}

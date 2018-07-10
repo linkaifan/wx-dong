@@ -1,0 +1,66 @@
+/* pages/shop/shop.wxss */
+#shop{
+  min-height: 100vh;
+  background-color: #f0eff5;
+  font-size: 13px;
+}
+.box{
+  background-color: #fff;
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
+  margin-bottom: 20rpx;
+}
+.move-btn{
+  width: 110rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background-color: #fe0000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: center;
+}
+.box-head{
+  display: flex;
+  justify-content: space-between;
+  height: 50rpx;
+  align-items: center;
+}
+.con-right{
+  flex-grow: 1;
+}
+.shop-img{
+  width: 150rpx;
+  height: 150rpx;
+  margin: 0 30rpx;
+}
+.edit-btn{
+  border: 1px solid #acacac;
+  text-align: center;
+  font-size: 11px;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+/* 底部结算bar */
+.bar{
+  position: fixed;
+  bottom: 0;
+  height: 90rpx;
+  width: 100vw;
+  background-color: #fff;
+  border-top: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  padding-left: 40rpx;
+}
+.bar-right>view{
+  display: inline-block;
+  width: 180rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+}
+.bar-btn{
+  background-color: #fe0000;
+  color: #fff;
+}
