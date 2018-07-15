@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "促销区",
+  "usingComponents": {
+    "nbtn": "../../common/nbtn/nbtn",
+    "shopbar": "../../common/shopbar/shopbar"
+  }
+}

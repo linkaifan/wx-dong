@@ -23,15 +23,15 @@
     <view class="discount">
       <view class="D-title">
         <image src="../../assets/home/hot.png" class="D-icon" />
-        人气热销
+        人气促销
       </view>
       <view class="goods">
         <view class="good" wx:for="{{discounts}}" wx:key="index">
           <image src="{{item.img}}" class="good-img" />
-          <view class="g-name">{{item.name}}</view>
+          <view class="g-name">{{item.brand}} {{item.name}}</view>
           <view class="g-seller">{{item.seller}}</view>
           <view class="g-weight">{{item.weight}}</view>
-          <view class="g-price">{{item.price}} 元</view>
+          <view class="g-price t-red">{{item.price}} 元</view>
         </view>
       </view>
       <view class="D-title">

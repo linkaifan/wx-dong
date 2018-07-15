@@ -1,0 +1,42 @@
+<!-- pages/submit/submit.wxml -->
+<view id="submit">
+  <view class="head df-sb contain" catchtap="toMe">
+    <view>
+      <view class="h50">收货人：{{}}</view>
+      <view class="h50">手机：{{}}</view>
+      <view class="h50">收货地址：{{}}</view>
+    </view>
+    <image src="../../assets/right.png" class="set-icon" />
+  </view>
+  <view class="info contain">
+    <view class="df-sb">
+      <text class="h50">预计送达时间</text>
+      <text class="h50">{{time}}</text>
+    </view>
+    <view class="line"></view>
+    <view class="df-sb">
+      <text class="h50">商品总额:</text>
+      <text class="h50 t-red">{{total}} 元</text>
+    </view>
+    <view>
+      备注：
+      <input bindinput="bindKeyInput" placeholder="请输入您的其他要求" 
+      type="text" confirm-type="done" data-key="note" />
+    </view>
+  </view>
+  <view class="box contain df" wx:for="{{shops}}" wx:key="{{index}}">
+    <image src="../../assets/test/1.jpg" class="box-img" />
+    <view class="box-info">
+      <view class="name">{{item.name}}</view>
+      <view class="weight">规格:{{item.weight}}</view>
+    </view>
+    <view>
+      <view class="t-bold">￥{{item.price}}</view>
+      <view>×1</view>
+    </view>
+  </view>
+  <view class="bar df-sb">
+    <text class="t-bold">应付金额：278.00元</text>
+    <text class="submit-btn">提交订单</text>
+  </view>
+</view>

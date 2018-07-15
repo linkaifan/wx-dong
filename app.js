@@ -1,39 +1,37 @@
 //app.js
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
+    this.globalData.shops.forEach(item => {
+      this.globalData.sum += item.price * item.count
+      this.globalData.total += item.count
+    });    
+    console.log('购物车总价：'+ this.globalData.sum);
+    console.log('购物车总数量：'+ this.globalData.total);
+    
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    shops:[
+      {
+        name:'长江桂柳A级白条鸭4.2-5.0斤',
+        seller:'广州番禺 长江桂柳',
+        price:139.00,
+        weight:"13.2kg/件",
+        count:1,
+        isChecked:true,
+      },
+      {
+        name:'长江桂xxA级白条鸭4.2-5.0斤',
+        seller:'广州番禺 长江xxx',
+        price:139.00,
+        weight:"13.2kg/件",
+        count:3,
+        isChecked:false,
+      },
+    ],
+    //总金额
+    sum:0,
+    //总数量，
+    total:0
   }
 })

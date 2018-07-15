@@ -23,14 +23,11 @@
         </view>
         <view class="df-sb">
           <text class="t-red">{{item.price}}元</text>
-          <view class="btn-box df">
-            <view class="edit-btn" bindtap="edit" data-mode="1" 
-            data-index="{{index}}">+</view>
-            <view class="edit-btn">{{item.count}}</view>
-            <view class="edit-btn" bindtap="edit" data-mode="0"
-            data-index="{{index}}">-</view>
-          </view>
+          <nbtn good="{{item}}" bind:add="add" bind:subtract="subtract" 
+          data-i="{{index}}">
+          </nbtn>
         </view>
+        
       </view>
     </view>
   </view>
@@ -45,7 +42,7 @@
     </view>
     <view class="bar-right">
       <view>合计：￥0</view>
-      <view class="bar-btn">去结算</view>
+      <view class="bar-btn" catchtap="toSubmit">去结算</view>
     </view>
   </view>
 </view>

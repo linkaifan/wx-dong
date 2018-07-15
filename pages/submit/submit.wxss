@@ -1,56 +1,51 @@
-/* pages/order/order.wxss */
-#order{
+/* pages/submit/submit.wxss */
+#submit{
   min-height: 100vh;
   background-color: #f0eff5;
   font-size: 13px;
 }
-.nav{
+.head{
   background-color: #fff;
-  text-align: center;
-  display: flex;
-  font-size: 12px;
-  height: 70rpx;
-  line-height: 70rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
   margin-bottom: 20rpx;
 }
-.nav-item{
-  width: 20vh;
+.info{
+  padding-top: 20rpx; 
+  padding-bottom: 20rpx; 
+  background-color: #fff;
+  margin-bottom: 20rpx;
 }
-.nav-active{
-  color: #0297fe;
-  border-bottom: 2px solid #0297fe;
+.set-icon{
+  width: 30rpx;
+  height: 30rpx;
 }
-/* 待收货 */
-.takeBox{
+.box{
   background-color: #fff;
   padding-bottom: 30rpx;
   padding-top: 10rpx;
   margin-bottom: 20rpx;
 }
-.takeBox-head{
-  height: 70rpx;
-  line-height: 70rpx;
-}
-.takeBox-mid{
+.box-mid{
   background-color: #f5f5f5;
   padding: 30rpx;
   display: flex;
   justify-content: space-between;
 }
-.takeBox-info{
+.box-info{
   flex-grow: 1;
 }
-.takeBox-img{
+.box-img{
   width: 150rpx;
   height: 150rpx;
   margin-right: 30rpx;
 }
-.takeBox-foot{
+.box-foot{
   padding: 10rpx;
   padding-bottom: 0;
   text-align: right;
 }
-.takeBox-btn{
+.box-btn{
   width: 130rpx;
   height: 50rpx;
   line-height: 50rpx;
@@ -59,4 +54,21 @@
   display: inline-block;
   text-align: center;
   border-radius: 3px;
+}
+.bar{
+  color: #fe0000;
+  height: 90rpx;
+  line-height: 90rpx;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.submit-btn{
+  color: #fff;
+  background-color: #fe0000;
+  width: 250rpx;
+  text-align: center;
 }

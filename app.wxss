@@ -1,14 +1,28 @@
 /**app.wxss**/
 .contain{
-  padding: 0 40rpx;
+  padding: 20rpx 40rpx;
 }
 .line{
   height: 1px;
   margin: 20rpx 0;
   background-color: #e7e7e7;
 }
+.line2{
+  height: 1px;
+  background-color: #e7e7e7;
+}
+.blue-line{
+  height: 1px;
+  background-color: #0297fe;
+}
 .t-red{
   color: #fe0000;
+}
+.t-blue{
+  color:#0297fe;
+}
+.t-gray{
+  color: #808080;
 }
 .df{
   display: flex;
@@ -26,4 +40,9 @@
 }
 .t-bold{
   font-weight: 600;
+}
+.h50{
+  height: 50rpx;
+  line-height: 50rpx;
+  display: block;
 }

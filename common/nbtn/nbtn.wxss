@@ -1,0 +1,12 @@
+/* common/nbtn/nbtn.wxss */
+.btn-box{
+  display: flex;
+}
+.edit-btn{
+  border: 1px solid #acacac;
+  text-align: center;
+  font-size: 11px;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}

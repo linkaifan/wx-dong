@@ -1,16 +1,10 @@
 <!-- pages/order/order.wxml -->
 <view id="order">
   <view class="nav">
-    <view class="nav-item {{curIndex == 0?'nav-active':''}}" 
-    data-i="0" bindtap="changeCurIndex">待付款</view>
-    <view class="nav-item {{curIndex == 1?'nav-active':''}}" 
-    data-i="1" bindtap="changeCurIndex">待发货</view>
-    <view class="nav-item {{curIndex == 2?'nav-active':''}}"
-    data-i="2" bindtap="changeCurIndex">待收货</view>
-    <view class="nav-item {{curIndex == 3?'nav-active':''}}" 
-    data-i="3" bindtap="changeCurIndex">完结</view>
-    <view class="nav-item {{curIndex == 4?'nav-active':''}}" 
-    data-i="4" bindtap="changeCurIndex">失效</view>
+    <view class="nav-item {{curIndex == index?'nav-active':''}}" wx:key="{{index}}" 
+    data-i="{{index}}" bindtap="changeCurIndex" wx:for="{{tabs}}" >
+      {{tabs[index]}}
+    </view>
   </view>
   <view class="content">
     <!-- 待支付 -->
@@ -19,7 +13,7 @@
     <view class="wait"></view>
     <!-- 待收货 -->
     <view class="take" hidden="{{curIndex != 2}}">
-      <view class="takeBox contain">
+      <view class="takeBox contain" wx:for="{{takes}}" wx:key="{{index}}">
         <view class="takeBox-head df-sb">
           <text>东方城东兴隆食品商行 ></text>
           <text class="t-red">卖家已发货</text>
@@ -27,11 +21,11 @@
         <view class="takeBox-mid">
           <image src="../../assets/test/1.jpg" class="takeBox-img"/>
           <view class="takeBox-info">
-            <view class="name">xfafafa</view>
-            <view class="weight">规格:fdafafafa</view>
+            <view class="name">{{item.name}}</view>
+            <view class="weight">规格:{{item.weight}}</view>
           </view>
           <view>
-            <view class="t-bold">￥16.90</view>
+            <view class="t-bold">￥{{item.total}}</view>
             <view>×1</view>
           </view>
         </view>
@@ -39,7 +33,7 @@
           <view>合计：￥16.80</view>
           <view class="line"></view>
           <view>
-            <text class="takeBox-btn">确认收货</text>
+            <text class="takeBox-btn" data-i="{{index}}" bindtap="complete">确认收货</text>
           </view>
         </view>
       </view>

@@ -1,0 +1,26 @@
+/* pages/detail/detail.wxss */
+#detail{
+  font-size: 12px;
+}
+.detail-swiper,.detail-img{
+  height: 80vw;
+  width: 100vw;
+}
+.edit-btn{
+  border: 1px solid #acacac;
+  text-align: center;
+  font-size: 11px;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.title{
+  background-color: #f4f4f4;
+  padding-left: 40rpx;
+  font-size: 13px;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.info{
+  margin-bottom: 130rpx;
+}

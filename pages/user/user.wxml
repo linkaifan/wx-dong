@@ -1,0 +1,105 @@
+<!-- pages/user/user.wxml -->
+<view id="user">
+  <view class="login" hidden="{{curTab != 'login'}}">
+    <image src="../../assets/login-test.png" class="test-img" />
+    <view class="log-form">
+      <view class="inp-box df">
+        <image src="../../assets/user/phone.png" class="icon" />
+        <input placeholder="请输入手机号码" type="number" 
+        bindinput="bindKeyInput" data-key="phone" />
+      </view>
+      <view class="blue-line"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/password.png" class="icon" />
+        <input placeholder="请输入6-16位密码" data-key="password" 
+        bindinput="bindKeyInput" password="{{true}}" />
+      </view>
+      <view class="blue-line"></view>
+      <view class="forget-t t-blue h50" catchtap="changeCurTab" data-to="forget">忘记密码</view>
+      <view class="log-btn1" catchtap="login">登 录</view>
+      <view class="log-btn2" catchtap="changeCurTab">注册账号</view>
+      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+    </view>
+  </view>
+  <view class="register" hidden="{{curTab != 'register'}}">
+    <view class="img-box">
+      <image src="../../assets/me/head.png" class="reg-img" />
+      <view>xxx欢迎您</view>
+    </view>
+    <view class="reg-form contain">
+      <view class="inp-box df">
+        <image src="../../assets/user/contact.png" class="icon" />
+        <input placeholder="联系人" data-key="contact" bindinput="bindKeyInput"/>
+      </view>
+      <view class="line2"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/phone.png" class="icon" />
+        <input placeholder="手机号" type="number" 
+        bindinput="bindKeyInput" data-key="phone" />
+      </view>
+      <view class="line2"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/code.png" class="icon" />
+        <input placeholder="请输入验证码" type="number" 
+        bindinput="bindKeyInput" data-key="code" />
+        <text class="t-blue t-code" catchtap="getCode">获取验证码</text>
+      </view>
+      <view class="line2"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/password.png" class="icon" />
+        <input placeholder="密码" data-key="password" 
+        bindinput="bindKeyInput" password="{{true}}" />
+      </view>
+      <view class="line2"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/password.png" class="icon" />
+        <input placeholder="确认密码" data-key="password2" 
+        bindinput="bindKeyInput" password="{{true}}" />
+      </view>
+      <view class="line2"></view>
+      <view class="reg-btn" catchtap="register">注册</view>
+      <view class="t-gray" style="text-align: center">
+        已有账号？
+        <text class="t-blue" catchtap="changeCurTab">立即登录</text>
+      </view>
+    </view>
+  </view>
+  <view class="forger" hidden="{{curTab != 'forget'}}">
+    <image src="../../assets/login-test.png" class="test-img" />
+    <view class="for-form" hidden="{{forgetTab != 1}}">
+      <view class="inp-box df">
+        <image src="../../assets/user/phone.png" class="icon" />
+        <input placeholder="手机号" type="number" 
+        bindinput="bindKeyInput" data-key="phone" />
+      </view>
+      <view class="blue-line"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/code.png" class="icon" />
+        <input placeholder="请输入验证码" type="number"  
+        bindinput="bindKeyInput" data-key="code" />
+        <text class="t-blue t-code" catchtap="getCode">获取验证码</text>
+      </view>
+      <view class="blue-line"></view>
+      <view class="log-btn1" catchtap="compareCode">验 证</view>
+      <view class="log-btn2" catchtap="changeCurTab">取 消</view>
+      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+    </view>
+    <view class="for-form" hidden="{{forgetTab != 2}}">
+      <view class="inp-box df">
+        <image src="../../assets/user/password.png" class="icon" />
+        <input placeholder="密码" data-key="password" 
+        bindinput="bindKeyInput" password="{{true}}" />
+      </view>
+      <view class="line2"></view>
+      <view class="inp-box df">
+        <image src="../../assets/user/password.png" class="icon" />
+        <input placeholder="确认密码" data-key="password2" 
+        bindinput="bindKeyInput" password="{{true}}" />
+      </view>
+      <view class="blue-line"></view>
+      <view class="log-btn1" catchtap="reset">密码重置</view>
+      <view class="log-btn2" catchtap="changeCurTab">取 消</view>
+      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+    </view>
+  </view>
+</view>

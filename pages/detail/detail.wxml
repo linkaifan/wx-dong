@@ -1,0 +1,35 @@
+<!-- pages/detail/detail.wxml -->
+<view id="detail">
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" class="detail-swiper">
+    <block wx:for="{{imgs}}" wx:key="{{index}}">
+      <swiper-item>
+        <image src="{{item}}" class="detail-img" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="contain">
+    <text class="h50 t-bold">{{good.name}}</text>
+    <view class="line2"></view>
+    <view class="df-sb" wx:for="{{good.categorys}}" wx:key="{{index}}">
+      <view>
+        <text class="h50">{{item.value}}</text>
+        <text class="h50 t-red">￥ {{item.price}}/件</text>
+      </view>
+      <nbtn good="{{item}}" bind:add="add" data-i="{{index}}"
+      bind:subtract="subtract" data-good="{{item}}"></nbtn>
+    </view>
+  </view>
+  <view class="title t-bold">商品详情</view>
+  <view class="contain info">
+    <text class="h50">品牌: {{good.brand}}</text>
+    <view class="line2"></view>
+    <text class="h50">厂名: {{good.factory}}</text>
+    <view class="line2"></view>
+    <text class="h50">存储方法: {{good.storage}}</text>
+    <view class="line2"></view>
+    <text class="h50">保质期: {{good.shelf}}</text>
+    <view class="line2"></view>
+    <view>备注: {{good.note}}</view>
+  </view>
+  <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
+</view>

@@ -1,0 +1,49 @@
+/* common/shopbar/shopbar.wxss */
+.bar,.bar-right{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bar{
+  background-color: #fff;
+  z-index: 100;
+  height: 90rpx;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  border-top: 1px solid #c7c7c7;
+  box-sizing: border-box;
+}
+.shop-icon{
+  width: 70rpx;
+  height: 70rpx;
+  margin-left: 40rpx;
+}
+.bar-btn{
+  margin-left: 20rpx;
+  background-color: #00b8ee;
+  color: #fff;
+  height: 90rpx;
+  line-height: 90rpx;
+  width: 180rpx;
+  text-align: center;
+}
+.t-red{
+  color: #fe0000;
+}
+.total{
+  background-color: #fe0000;
+  color: #fff;
+  border-radius: 50%;
+  width: 25rpx;
+  height: 25rpx;
+  line-height: 25rpx;
+  position: absolute;
+  text-align: center;
+  font-size: 8px;
+  top: 0;
+  left: 95rpx;
+}
+.bar-left{
+  position: relative;
+}

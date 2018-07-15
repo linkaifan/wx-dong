@@ -1,0 +1,14 @@
+<!-- common/shopbar/shopbar.wxml -->
+<view class="bar">
+  <view class="bar-left">
+    <image src="../../assets/shop-1.png" class="shop-icon" />
+    <view class="total" hidden="{{total==0}}">{{total}}</view>
+  </view>
+  <view class="bar-right df-sb">
+    <view>
+      总价:
+      <text class="t-red">￥{{sum}}</text>
+    </view>
+    <view class="bar-btn" bindtap="toShop">去购物车</view>
+  </view>
+</view>

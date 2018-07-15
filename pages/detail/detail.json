@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "商品详情",
+  "usingComponents": {
+    "shopbar": "../../common/shopbar/shopbar",
+    "nbtn": "../../common/nbtn/nbtn"
+  }
+}
