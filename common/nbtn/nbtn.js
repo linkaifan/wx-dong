@@ -23,12 +23,12 @@ Component({
     edit(e) {     
       let mode = e.currentTarget.dataset.mode
       if (mode == 1) {
-        //加1 
+        //加1  
         this.triggerEvent('add',e)
       } else if (mode == 0) {
         //减1
         this.triggerEvent('subtract',e)
-      }
+      }    
     },
   }
 })

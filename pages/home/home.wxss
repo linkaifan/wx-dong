@@ -4,8 +4,8 @@
   text-align: center;
 }
 /* 顶部搜索栏 */
-.search{
-  display: flex;
+.address{
+  margin-right: 30rpx;
 }
 /* banner轮播图 */
 .slide-image{

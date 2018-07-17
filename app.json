@@ -8,12 +8,13 @@
     "pages/detail/detail",
     "pages/user/user",
     "pages/special/special",
-    "pages/evaluation/evaluation"
+    "pages/evaluation/evaluation",
+    "pages/goodlist/goodlist"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#0297fe",
-    "navigationBarTitleText": "冻品云",
+    "navigationBarTitleText": "冻品汇",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

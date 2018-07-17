@@ -36,8 +36,9 @@
   text-align: center;
 }
 .t-code{
-  width: 180rpx;
+  width: 200rpx;
   text-align: center;
+  font-size: 12px;
 }
 /* 登陆 */
 .log-form,.for-form{

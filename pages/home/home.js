@@ -1,16 +1,19 @@
 // pages/freeze/home.js
+const service = require('../config.js').service
+const utils = require('../config.js').utils
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    banners: ["../../assets/test/1.jpg",
-      "../../assets/test/2.jpeg",
-      "../../assets/test/3.jpeg"
-    ],
-    types: [
-      {
+    inputShowed: false,
+    inputVal: "",
+    banners: [],
+    citys:[],
+    //暂时默认广州id1
+    cityId:1,
+    types: [{
         src: "../../assets/home/ji.png",
         name: "鸭鸭专区",
       },
@@ -45,102 +48,110 @@ Page({
         name: "烟熏专区",
       }
     ],
-    discounts:[
+    discounts: [
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"11 kg",
-        price:"11",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "11 kg",
+        price: "11",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"22 kg",
-        price:"22",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "22 kg",
+        price: "22",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"33 kg",
-        price:"33",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "33 kg",
+        price: "33",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"44 kg",
-        price:"44",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "44 kg",
+        price: "44",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"55 kg",
-        price:"55",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "55 kg",
+        price: "55",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"66 kg",
-        price:"66",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "66 kg",
+        price: "66",
       }
     ],
-    recommendations:[
-      {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"11 kg",
-        price:"11",
+    recommendations: [{
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "11 kg",
+        price: "11",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"22 kg",
-        price:"22",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "22 kg",
+        price: "22",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"33 kg",
-        price:"33",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "33 kg",
+        price: "33",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"44 kg",
-        price:"44",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "44 kg",
+        price: "44",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"55 kg",
-        price:"55",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "55 kg",
+        price: "55",
       },
       {
-        img:"../../assets/test/1.jpg",
-        name:"印度飞饼",
-        seller:"广工 广州番禺",
-        weight:"66 kg",
-        price:"66",
+        img: "../../assets/test/1.jpg",
+        name: "印度飞饼",
+        seller: "广工 广州番禺",
+        weight: "66 kg",
+        price: "66",
       }
     ]
-    
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let cityId = this.data.cityId
+    //获取banners,citys,推荐区recommendations,促销区discounts
+    utils.getData(this,service.getBannerPicture,'banners')
+    utils.getData(this,service.getCity,'citys')
+    utils.getData(this,service.selectStateGoods,'tuijian',{
+      cityId,state:2,num:0
+    })
+    utils.getData(this,service.selectStateGoods,'cuxiao',{
+      cityId,state:3,num:0
+    })
   },
 
   /**
@@ -190,5 +201,27 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  //顶部搜索栏
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
+  },
 })
