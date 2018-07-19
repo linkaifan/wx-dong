@@ -145,6 +145,9 @@ Page({
           })
         }
 
+      },
+      fail: function() {
+        this.fail_cb()
       }
     })
 
@@ -187,12 +190,19 @@ Page({
         let timer = setInterval(function () {
           if (!self.data[setTime]) {
             clearInterval(timer)
+            //使验证码失效
+            self.setData({
+              [setCode]: 0,
+            })
           } else {
             self.setData({
               [setTime]: --self.data[setTime],
             })
           }
         }, 1000)
+      },
+      fail: function() {
+        this.fail_cb()
       }
     })
 
@@ -230,6 +240,9 @@ Page({
       return;
     }
     //发送data去注册
+    wx.showLoading({
+      title: '注册中',
+    })
     wx.request({
       url: config.register,
       method: "POST",
@@ -265,6 +278,9 @@ Page({
           }, 2000);
         }
 
+      },
+      fail: function() {
+        this.fail_cb()
       }
     })
 
@@ -298,6 +314,9 @@ Page({
       return;
     }
     //发送data去修改密码
+    wx.showLoading({
+      title: '重置中',
+    })
     wx.request({
       url: config.updatePassword,
       method: "POST",
@@ -331,6 +350,9 @@ Page({
             })        
           }, 2000);
         }
+      },
+      fail: function() {
+        this.fail_cb()
       }
     })
   },
@@ -354,5 +376,13 @@ Page({
       return false
     }
     return true
+  },
+  fail_cb(){
+    wx.hideLoading()
+    wx.showToast({
+      title: '操作失败,请检查网络',
+      icon: 'none',
+      duration: 2000
+    })
   }
 })

@@ -12,6 +12,7 @@ App({
   globalData: {
     userInfo: null,
     isLogin:false,
+    cityId:null,
     shops:[
       {
         name:'长江桂柳A级白条鸭4.2-5.0斤',

@@ -1,0 +1,40 @@
+/* pages/type/type.wxss */
+#type{
+  font-size: 12px;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+.address{
+  margin-right: 30rpx;
+}
+.content{
+  display: flex;
+  justify-content: space-between;
+}
+.nav{
+  width: 30vw;
+}
+.big-type{
+  background-color: #fff;
+  height: 75rpx;
+  line-height: 75rpx;
+  margin-bottom: 4rpx;
+}
+.big-active{
+  color: #0ab6da;
+  background-color: #f4f4f4;
+}
+.result{
+  width: 67vw;
+  text-align: left;
+}
+.res-title{
+  font-size: 16px;
+  font-weight: 600;
+  height: 75rpx;
+  line-height: 75rpx;
+}
+.res-content{
+  background-color: #fff;
+}

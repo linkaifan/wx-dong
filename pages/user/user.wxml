@@ -37,9 +37,10 @@
       <view class="line2"></view>
       <view class="inp-box df">
         <image src="../../assets/user/code.png" class="icon" />
-        <input placeholder="请输入验证码" type="number" bindinput="bindKeyInput" data-key="code" />
+        <input placeholder="请输入验证码" type="number" class="code-inp"
+        bindinput="bindKeyInput" data-key="code" />
         <text class="t-blue t-code" catchtap="getCode" data-mode="register">
-          <text hidden="{{!reg_time}}">有效时间：{{reg_time}}s</text>
+          <text hidden="{{!reg_time}}">有效:{{reg_time}}s</text>
           <text hidden="{{reg_time}}">获取验证码</text>
         </text>
       </view>
@@ -71,9 +72,10 @@
       <view class="blue-line"></view>
       <view class="inp-box df">
         <image src="../../assets/user/code.png" class="icon" />
-        <input placeholder="请输入验证码" type="number" bindinput="bindKeyInput" data-key="code" />
+        <input class="code-inp" placeholder="请输入验证码" type="number" 
+        bindinput="bindKeyInput" data-key="code" />
         <text class="t-blue t-code" catchtap="getCode" data-mode="forget">
-          <text hidden="{{!for_time}}">有效时间：{{for_time}}s</text>
+          <text hidden="{{!for_time}}">有效:{{for_time}}s</text>
           <text hidden="{{for_time}}">获取验证码</text>
         </text>
       </view>

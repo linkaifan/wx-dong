@@ -1,5 +1,7 @@
 // pages/goodlist/goodlist.js
 const app = getApp()
+const service = require('../config.js').service
+const utils = require('../config.js').utils
 Page({
 
   /**
@@ -34,7 +36,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      search: options.search
+    })      
+    //获取搜索内容的商品列表
+    utils.getData(this,service.selectGoods,'jieguo',{
+      message:options.search,
+      cityId:app.globalData.cityId
+    })     
   },
 
   /**

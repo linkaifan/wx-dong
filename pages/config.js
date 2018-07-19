@@ -25,6 +25,11 @@ var config = {
 		getBannerPicture: host + '/getBannerPicture',
 		getCity: host + '/getCity',
 		selectStateGoods: host + '/selectStateGoods',
+		//goodlist搜索结果页
+		selectGoods: host + '/selectGoods',
+		//type分类页
+		smallType: host + '/smallType',		
+		selectTypeGoods: host + '/selectTypeGoods',		
 	},
 	utils: {
 		getData: function (self,url, setData, data,header) {

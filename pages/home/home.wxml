@@ -1,12 +1,14 @@
 <!-- pages/freeze/home.wxml -->
 <view id="home">
   <view class="weui-search-bar df">
-    <view class="address">海口市</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range-key="{{'city'}}" 
+    range="{{citys}}" class="address">
+      <view>{{city}}</view>
+    </picker>
     <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">
         <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-        <input type="text" class="weui-search-bar__input" placeholder="搜索" 
-        value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+        <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
         <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
           <icon type="clear" size="14"></icon>
         </view>
@@ -16,6 +18,7 @@
         <view class="weui-search-bar__text">搜索</view>
       </label>
     </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="search">搜索</view>
     <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">
       取消
     </view>
@@ -30,19 +33,24 @@
     </swiper>
   </view>
   <view class="type">
-    <view class="type-box" wx:for="{{types}}" wx:key="index">
+    <view class="type-box" wx:for="{{types}}" wx:key="index" 
+    bindtap="toType" data-i="{{index}}">
       <image src="{{item.src}}" class="type-icon" />
       <view>{{item.name}}</view>
     </view>
   </view>
+  <view class="home-line"></view>
   <view class="zone">
     <view class="discount">
       <view class="D-title">
-        <image src="../../assets/home/hot.png" class="D-icon" />
-        人气促销
+        <view>人气促销</view>
+        <view class="t-more t-gray">
+          查看更多
+          <image src="../../assets/right.png" class="sm-icon" />
+        </view>
       </view>
       <view class="goods">
-        <view class="good" wx:for="{{discounts}}" wx:key="index">
+        <view class="good-box" wx:for="{{discounts}}" wx:key="index">
           <image src="{{item.img}}" class="good-img" />
           <view class="g-name">{{item.brand}} {{item.name}}</view>
           <view class="g-seller">{{item.seller}}</view>
@@ -50,28 +58,24 @@
           <view class="g-price t-red">{{item.price}} 元</view>
         </view>
       </view>
-      <view class="D-title">
-        <image src="../../assets/home/click.png" class="D-icon" />
-        查看更多
-      </view>
     </view>
+    <view class="home-line"></view>
     <view class="recommendation">
       <view class="R-title">
-        <image src="../../assets/home/Re.png" class="D-icon" />
-        精品推荐
+        <view>精品推荐</view>
+        <view class="t-more t-gray">
+          查看更多
+          <image src="../../assets/right.png" class="sm-icon" />
+        </view>
       </view>
       <view class="goods">
-        <view class="good" wx:for="{{recommendations}}" wx:key="index">
+        <view class="good-box" wx:for="{{recommendations}}" wx:key="index">
           <image src="{{item.img}}" class="good-img" />
           <view class="g-name">{{item.name}}</view>
           <view class="g-seller">{{item.seller}}</view>
           <view class="g-weight">{{item.weight}}</view>
           <view class="g-price">{{item.price}} 元</view>
         </view>
-      </view>
-      <view class="R-title">
-        <image src="../../assets/home/click2.png" class="D-icon" />
-        查看更多
       </view>
     </view>
   </view>

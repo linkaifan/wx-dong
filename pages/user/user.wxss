@@ -36,9 +36,10 @@
   text-align: center;
 }
 .t-code{
-  width: 200rpx;
+  word-break: keep-all;
+  word-wrap: break-word;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
 }
 /* 登陆 */
 .log-form,.for-form{

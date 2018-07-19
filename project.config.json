@@ -35,8 +35,8 @@
 				{
 					"id": 0,
 					"name": "test",
-					"pathName": "pages/me/me",
-					"query": ""
+					"pathName": "pages/type/type",
+					"query": "bigTypeIndex=1"
 				}
 			]
 		}

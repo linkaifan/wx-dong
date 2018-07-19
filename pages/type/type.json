@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "分 类",
+  "usingComponents": {
+    "nbtn": "../../common/nbtn/nbtn"
+  }
+}

@@ -16,17 +16,25 @@
 .type{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 10rpx 20rpx;
 }
 .type-box{
   margin-top: 15rpx;
+  width: 18vw;
+  text-align: center;
+  font-size: 10px;
 }
 .type-icon{
-  width: 18vw;
-  height: 18vw;
+  width: 14vw;
+  height: 14vw;
   border-radius: 50%;
-  display: block;
   background-color: #ff3c4d;
+}
+.home-line{
+  height: 20rpx;
+  background-color: #e7e7e7;
+  margin: 40rpx 0;
 }
 /* 专区入口 */
 .goods{
@@ -34,39 +42,44 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.good{
+.good-box{
   text-align: left;
   border: 1px solid #aea794;
   margin-top: 15rpx;
   background-color: #fff;
+  padding: 20rpx;
+  width: 30vw;
+  box-sizing: border-box;
 }
 .good-img{
-  width: 30vw;
-  height: 30vw;
-}
-.discount{
-  background-color: #f6c447;
-  padding-bottom: 15rpx;
+  width: 25vw;
+  height: 25vw;
+  margin: 0 auto;
 }
 .recommendation{
-  background-color: #489cf4;
-  padding-bottom: 15rpx;
+  padding-bottom: 40rpx;
 }
 .D-title,.R-title{
-  padding-top: 15rpx;
-  font-size: 15px;
+  margin-top: 15rpx;
+  font-size: 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-.D-title{
-  color: #ee000d;
-}
-.R-title{
-  color:#fff;
+  justify-content: space-between;
+  text-align: left;
+  padding: 0 20rpx;
+  font-weight: 600;
+
 }
 .D-icon{
-  width: 50rpx;
-  height: 50rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-right: 5rpx;
+}
+.sm-icon{
+  width: 20rpx;
+  height: 20rpx;
+}
+.t-more{
+  font-size: 12px;
+  font-weight: 500;
 }

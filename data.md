@@ -83,3 +83,10 @@
     }]
   }]
 ```
+
+## 网络请求操作
+- config.js中写了两个网络请求的函数，getData,setData
+- getData,参数：self,url, setData, data,header
+- setData,参数：self,url,data,succ_cb,fail_cb,[请求头已加Authorization]
+1. user页没有用到这两个，操作的时候，发起请求request前先弹出Loading,success和fail后再hidden
+2. me页中初始化加载数据的时候[onshow],用getData请求数据。在地址操作的时候，发起请求前弹出Loading，fail的时候再hidden[通过第4，5参数传入成功或失败的回调函数]
