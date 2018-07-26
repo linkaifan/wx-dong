@@ -1,4 +1,5 @@
 <!-- common/shopbar/shopbar.wxml -->
+<wxs module="dateSum" src="../../filter/sum.wxs"></wxs>
 <view class="bar">
   <view class="bar-left">
     <image src="../../assets/shop-1.png" class="shop-icon" />
@@ -7,7 +8,7 @@
   <view class="bar-right df-sb">
     <view>
       总价:
-      <text class="t-red">￥{{sum}}</text>
+      <text class="t-red">￥{{dateSum.getSum(sum,2)}}</text>
     </view>
     <view class="bar-btn" bindtap="toShop">去购物车</view>
   </view>

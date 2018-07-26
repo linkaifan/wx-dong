@@ -8,7 +8,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userId: null,
     token: null,
     phone:null,
     tabs: [{
@@ -41,7 +40,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**
@@ -55,18 +53,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (wx.getStorageSync('userId')) {
+    if (wx.getStorageSync('token')) {
       let self = this
       this.setData({
-        userId: wx.getStorageSync('userId'),
         token: wx.getStorageSync('token'),
         phone: wx.getStorageSync('phone'),
       })
-      //获取个人数据：购物车，地址，订单...等
-      utils.getData(this, service.selectAddressByUserId, 'addressItems', {
-        userId: this.data.userId
-      }, {
+      //获取个人数据：地址，订单...等
+      utils.getData(this, service.selectAddress, 'addressItems', {}, {
         'Authorization': 'Bearer ' + this.data.token
+      })
+      //获取购物车信息
+      utils.setData(this, service.shoppingCar,{},function (res) {           
+        app.globalData.shops = res.data  
+        app.globalData.sum = 0
+        app.globalData.total = 0
+        app.globalData.shops.forEach(item => {
+          app.globalData.sum += item.price.price * item.buyNum
+          app.globalData.total += item.buyNum
+        });            
       })
     } else {
       wx.navigateTo({
@@ -117,7 +122,6 @@ Page({
     })
     let i = e.currentTarget.dataset.index
     let info = {
-      userId: this.data.userId,
       addressId: this.data.addressItems[i].id
     }
     utils.setData(this, service.setDefaultAddress, info, function (res) {   
@@ -168,8 +172,7 @@ Page({
         userName: detail.userName,
         userPhone: detail.userPhone,
         address: detail.address,
-        userId: this.data.userId,
-        id: detail.id
+        addressId: detail.id
       }
       utils.setData(this, service.updateAddress, info, function (res) {
         wx.hideLoading()
@@ -191,10 +194,9 @@ Page({
     } else {
       //新增
       let info = {
-        userName: detail.address,
+        userName: detail.userName,
         userPhone: detail.userPhone,
         address: detail.address,
-        userId: this.data.userId
       }
       utils.setData(this, service.insertAddress, info, function (res) {
         wx.hideLoading()
@@ -272,9 +274,6 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.removeStorage({
-            key: 'userId'
-          })
-          wx.removeStorage({
             key: 'token'
           })
           wx.removeStorage({
@@ -287,6 +286,11 @@ Page({
           return
         }
       }
+    })
+  },
+  toAllOrder(){
+    wx.navigateTo({
+      url: '../allOrder/allOrder'
     })
   },
   fail_cb(){

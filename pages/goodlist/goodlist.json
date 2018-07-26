@@ -2,6 +2,7 @@
   "navigationBarTitleText": "搜索结果",
   "usingComponents": {
     "nbtn": "../../common/nbtn/nbtn",
-    "shopbar": "../../common/shopbar/shopbar"
+    "shopbar": "../../common/shopbar/shopbar",
+    "good": "../../common/good/good"
   }
 }

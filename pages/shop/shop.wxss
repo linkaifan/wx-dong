@@ -4,6 +4,9 @@
   background-color: #f0eff5;
   font-size: 13px;
 }
+.content{
+  margin-bottom: 120rpx;
+}
 .box{
   background-color: #fff;
   padding-top: 40rpx;
@@ -34,6 +37,9 @@
   height: 150rpx;
   margin: 0 30rpx;
 }
+.btn-box{
+  display: flex;
+}
 .edit-btn{
   border: 1px solid #acacac;
   text-align: center;
@@ -63,4 +69,8 @@
 .bar-btn{
   background-color: #fe0000;
   color: #fff;
+  margin-left: 30rpx;
+}
+.bar-t{
+  min-width: 250rpx;
 }

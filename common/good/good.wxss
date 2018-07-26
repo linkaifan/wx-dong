@@ -1,0 +1,39 @@
+/* common/good/good.wxss */
+
+.box{
+  background-color: #fff;
+  border: 1px solid #d2d2d4;
+  margin:0 10rpx 40rpx 10rpx;
+  padding: 20rpx;
+}
+.box-img{
+  width: 180rpx;
+  height: 180rpx;
+  margin-right: 30rpx;
+}
+.t-red{
+  color: #fe0000;
+}
+.t-blue{
+  color:#0297fe;
+}
+.t-gray{
+  color: #808080;
+}
+.df{
+  display: flex;
+  align-items: center;
+}
+.df-sb{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.t-bold{
+  font-weight: 600;
+}
+.h50{
+  height: 50rpx;
+  line-height: 50rpx;
+  display: block;
+}

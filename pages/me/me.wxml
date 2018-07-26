@@ -12,7 +12,7 @@
     <view class="order">
       <view class="o-title">
         <text class="o-T">我的订单</text>
-        <text class="o-t">查看全部 ></text>
+        <text class="o-t" catchtap="toAllOrder">查看全部 ></text>
       </view>
       <view class="nav">
         <view class="o-item" data-i="{{index}}" catchtap="toOrder"

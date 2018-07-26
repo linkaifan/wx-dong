@@ -1,0 +1,22 @@
+<!--common/good/good.wxml-->
+<view class="good">
+    <view class="box">
+    <view class="df">
+      <image src="{{good.pictures[0]}}" class="box-img"  catchtap="toDetail"/>
+      <view>
+        <text class="t-bold h50">{{good.name}}</text>
+        <text class="h50">{{good.price[0].weight}}</text>
+        <text class="t-red h50">￥ {{good.price[0].price}}</text>
+      </view>
+    </view>
+    <view wx:for="{{good.price}}" wx:key="{{index}}">
+      <view>
+        <text class="h50">{{item.value}}</text>
+        <view class="df-sb">
+          <text class="h50 t-red">￥ {{item.price}}</text>
+          <nbtn good="{{item}}" goodid="{{good.id}}" bind:updata="updata"></nbtn>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

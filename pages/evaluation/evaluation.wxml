@@ -1,21 +1,23 @@
-<!--pages/evaluation/evaluation.wxml-->
-<view id="evaluation" class="contain">
-  <view class="df">
-    <image src="../../assets/test/1.jpg" class="e-img"/>    
-    <view>
-      <text class="t-bold h50">描述相符：</text>
-      <view class="df">
-        <text class="star {{checked == item?'active':''}}" wx:for="{{stars}}" 
-        wx:key="{{index}}" catchtap="changeStar" data-i="{{item}}">{{item}}星
-        </text>
-      </view>      
+<!-- pages/evaluation/evaluation.wxml -->
+<view class="evaluation ">
+  <view class="contain" wx:for="{{goods}}" wx:key="{{index}}">
+    <view class="df">
+      <image src="{{item.goods.picture}}" class="e-img" />
+      <view>
+        <text class="t-bold h50">描述相符：</text>
+        <view class="df">
+          <text class="star {{goodsStar[index] == item?'active':''}}" 
+          wx:for="{{stars}}" wx:for-index="starIndx" data-i="{{index}}" 
+          data-value="{{item}}" wx:key="{{starIndx}}" catchtap="changeStar">{{item}}星
+          </text>
+        </view>
+      </view>
     </view>
+    <view class="line"></view>
+    <textarea placeholder="分享你的购买心得" bindinput="evaluate" data-i="{{index}}"/>
   </view>
-  <view class="line"></view>
-  <textarea placeholder="分享你的购买心得"/>
   <view class="df-sb">
-    <view ></view>
-    <view class="e-btn">提交评论</view>
+    <view></view>
+    <view class="e-btn" catchtap="submitEvaluation">提交评论</view>
   </view>
-  
 </view>

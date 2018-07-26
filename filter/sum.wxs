@@ -1,0 +1,8 @@
+var Sum = {
+  getSum:function (preSum,num) {
+    return Number(preSum).toFixed(num)
+  }
+} 
+module.exports = {
+  getSum: Sum.getSum
+}

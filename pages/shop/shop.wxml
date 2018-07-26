@@ -1,47 +1,55 @@
 <!-- pages/shop/shop.wxml -->
 <view id="shop">
-  <view class="box contain" wx:for="{{shops}}" wx:key="{{index}}">
-    <view class="box-head">
-      <text>{{item.name}}</text>
-      <view class="move-btn" bindtap="move" data-index="{{index}}">删除</view>
-    </view>
-    <view class="line"></view>
-    <view class="box-contain df">
-      <view class="con-left df">
-        <checkbox-group bindchange="checkboxChange">
-          <label>
-            <checkbox value="{{item.id}}" checked="{{item.isChecked}}" color="#fe0000" />
-          </label>
-        </checkbox-group>
-        <image src="../../assets/test/1.jpg" class="shop-img" />
+  <view class="content">
+    <view class="box contain" wx:for="{{shops}}" wx:key="{{index}}">
+      <view class="box-head">
+        <text>{{item.goods.brand}} {{item.goods.name}}</text>
+        <view class="move-btn" bindtap="move" data-index="{{index}}">删除</view>
       </view>
-      <view class="con-right">
-        <view>{{item.place}}</view>
-        <view>{{item.seller}}</view>
-        <view class="weight">
-          <text>{{item.weight}}</text>
+      <view class="line"></view>
+      <view class="box-contain df">
+        <view class="con-left df">
+          <checkbox-group bindchange="checkboxChange"  data-i="{{index}}">
+            <label>
+              <checkbox  checked="{{item.isCheck}}" color="#fe0000" />
+            </label>
+          </checkbox-group>
+          <image src="{{item.goods.picture}}" class="shop-img" />
         </view>
-        <view class="df-sb">
-          <text class="t-red">{{item.price}}元</text>
-          <nbtn good="{{item}}" bind:add="add" bind:subtract="subtract" 
-          data-i="{{index}}">
-          </nbtn>
+        <view class="con-right">
+          <view>{{item.goods.name}}</view>
+          <view class="weight">
+            <text>{{item.price.weight}}</text>
+          </view>
+          <view class="df-sb">
+            <text class="t-red">{{item.price.price}}元</text>
+            <view class="btn-box">
+              <view class="edit-btn" bindtap="editNum" data-mode="1" 
+              data-i="{{index}}">+</view>
+              <view class="edit-btn" hidden="{{item.price.buyNum == 0}}">
+                {{item.price.buyNum}}
+              </view>
+              <view class="edit-btn" bindtap="editNum" data-mode="0" 
+              hidden="{{item.price.buyNum == 0}}" data-i="{{index}}">
+                -
+              </view>
+            </view>
+          </view>
         </view>
-        
       </view>
     </view>
   </view>
   <view class="bar df-sb">
     <view class="bar-left">
-      <radio-group bindchange="radioChange">
+      <checkbox-group bindchange="checkAll">
         <label>
-          <radio value="{{index}}" checked="{{item.isChecked}}" color="#fe0000" />
+          <checkbox color="#fe0000" checked="{{isCheackAll}}" />
           全选
         </label>
-      </radio-group>
+      </checkbox-group>
     </view>
     <view class="bar-right">
-      <view>合计：￥0</view>
+      <view class="bar-t">合计：￥{{sum}}</view>
       <view class="bar-btn" catchtap="toSubmit">去结算</view>
     </view>
   </view>

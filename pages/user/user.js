@@ -121,7 +121,6 @@ Page({
         wx.hideLoading()
         console.log(res);
         if (res.statusCode == 200) {
-          wx.setStorageSync('userId', res.data.id)
           wx.setStorageSync('token', res.data.token)
           wx.setStorageSync('phone', res.data.account)
           wx.showToast({

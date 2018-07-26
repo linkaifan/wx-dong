@@ -1,0 +1,28 @@
+<!-- pages/allOrder/allOrder.wxml -->
+<view id="allOrder">
+  <view class="takeBox contain" wx:for="{{orders}}" wx:key="{{index}}">
+    <view class="takeBox-head df-sb">
+      <text>东方城东兴隆食品商行 ></text>
+      <text class="t-red" hidden="{{item.state!=1}}">未付款</text>
+      <text class="t-red" hidden="{{item.state!=2}}">待发货</text>
+      <text class="t-red" hidden="{{item.state!=3}}">待收货</text>
+      <text class="t-red" hidden="{{item.state!=7}}">已完成</text>
+      <text class="t-red" hidden="{{item.state!=5}}">已失效</text>
+    </view>
+    <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+      <image src="{{good.goods.picture}}" class="takeBox-img" />
+      <view class="takeBox-info">
+        <view class="name">{{good.goods.name}}</view>
+        <view class="weight">规格:{{good.price.weight}}</view>
+      </view>
+      <view class="t-right">
+        <view class="t-bold">￥{{good.price.price}}</view>
+        <view>×{{good.price.buyNum}}</view>
+      </view>
+    </view>
+    <view class="takeBox-foot">
+      <view>合计：￥{{item.sum}}</view>
+      <view class="line"></view>
+    </view>
+  </view>
+</view>

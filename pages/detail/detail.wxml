@@ -1,7 +1,7 @@
 <!-- pages/detail/detail.wxml -->
 <view id="detail">
   <swiper indicator-dots="{{true}}" autoplay="{{true}}" class="detail-swiper">
-    <block wx:for="{{imgs}}" wx:key="{{index}}">
+    <block wx:for="{{good.pictures}}" wx:key="{{index}}">
       <swiper-item>
         <image src="{{item}}" class="detail-img" />
       </swiper-item>
@@ -10,13 +10,12 @@
   <view class="contain">
     <text class="h50 t-bold">{{good.name}}</text>
     <view class="line2"></view>
-    <view class="df-sb" wx:for="{{good.categorys}}" wx:key="{{index}}">
+    <view class="df-sb" wx:for="{{good.price}}" wx:key="{{index}}">
       <view>
-        <text class="h50">{{item.value}}</text>
-        <text class="h50 t-red">￥ {{item.price}}/件</text>
+        <text class="h50">{{item.weight}}</text>
+        <text class="h50 t-red">￥ {{item.price}}/{{item.unit}}</text>
       </view>
-      <nbtn good="{{item}}" bind:add="add" data-i="{{index}}"
-      bind:subtract="subtract" data-good="{{item}}"></nbtn>
+      <nbtn good="{{item}}" goodid="{{good.id}}" bind:updata="updata"></nbtn>
     </view>
   </view>
   <view class="title t-bold">商品详情</view>
@@ -27,9 +26,9 @@
     <view class="line2"></view>
     <text class="h50">存储方法: {{good.storage}}</text>
     <view class="line2"></view>
-    <text class="h50">保质期: {{good.shelf}}</text>
+    <text class="h50">保质期: {{good.shelfLife}}</text>
     <view class="line2"></view>
-    <view>备注: {{good.note}}</view>
+    <view>备注: {{good.remarks}}</view>
   </view>
   <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
 </view>

@@ -1,30 +1,23 @@
 // pages/order/order.js
+const app = getApp()
+const service = require('../config.js').service
+const utils = require('../config.js').utils
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    tabs:["待付款","待发货","待收货","完结","失效"],
+    token: null,
+    tabs: ["待付款", "待发货", "待收货", "完结", "失效"],
     //当前显示内容，0：待付款，1：待发货，2：待收货，3：完结，4：失效
     curIndex: 0,
-    //待收货
-    takes:[
-      {
-        name:'广工印度飞饼',
-        weight:'12kg',
-        price:16.90,
-        count:1,
-        total:16.90
-      },
-      {
-        name:'广工印度飞饼',
-        weight:'12kg',
-        price:16.90,
-        count:1,
-        total:16.90
-      },
-    ]
+    orders: [],
+    pays: [],
+    waits: [],
+    takes: [],
+    coms: [],
+    fails: [],
   },
 
   /**
@@ -32,7 +25,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      curIndex:options.i
+      curIndex: options.i,
+      token: wx.getStorageSync('token'),
     })
   },
 
@@ -47,7 +41,40 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let self = this
+    utils.setData(this, service.selectOrderForm, {}, function (res) {
+      self.setData({
+        orders: res.data
+      })
+      self.data.orders.forEach(arr => {
+        switch (arr.state) {
+          case 1:
+            self.data.pays.push(arr)
+            break;
+          case 2:
+            self.data.waits.push(arr)
+            break;
+          case 3:
+            self.data.takes.push(arr)
+            break;
+          case 7:
+            self.data.coms.push(arr)
+            break;
+          case 5:
+            self.data.fails.push(arr)
+            break;
+          default:
+            break;
+        }
+      });
+      self.setData({
+        pays: self.data.pays,
+        waits: self.data.waits,
+        takes: self.data.takes,
+        coms: self.data.coms,
+        fails: self.data.fails,
+      })
+    }, this.fail_cb)
   },
 
   /**
@@ -93,20 +120,82 @@ Page({
       title: this.data.tabs[i]
     })
   },
-  complete(e) {
+  pay(e) {
     let i = e.currentTarget.dataset.i
-    console.log(i);
-    
+    //连接wx付款接口，成功后更改订单状态  
+  },
+  cancle(e) {
+    let self = this
+    //10分钟内未付款时或点击取消订单
+    let i = e.currentTarget.dataset.i
+    let data = {
+      orderFormId: this.data.pays[i].id,
+      state: 5
+    }
+    wx.showModal({
+      title: '温馨提示',
+      content: '是否确认取消订单？',
+      success: function (res) {
+        if (res.confirm) {
+          utils.setData(self, service.updateOrderForm, data, function (res) {
+            console.log(res);
+            wx.showToast({
+              title: '取消订单成功',
+              icon: 'success',
+              duration: 1500,
+              wrap: true
+            })
+            setTimeout(() => {
+              wx.reLaunch({
+                url: './order?i=4'
+              })
+            }, 1500);
+          })
+        } else if (res.cancel) {
+          return
+        }
+      }
+    })
+  },
+  gain(e) {
+    let self = this
+    //确认收货
+    let i = e.currentTarget.dataset.i
+    let data = {
+      orderFormId: this.data.takes[i].id,
+      state: 7
+    }
     wx.showModal({
       title: '温馨提示',
       content: '是否确认收货？',
       success: function (res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          utils.setData(self, service.updateOrderForm, data, function (res) {
+            console.log(res);
+            wx.showToast({
+              title: '确认收货成功',
+              icon: 'success',
+              duration: 1500,
+              wrap: true
+            })
+            setTimeout(() => {
+              wx.navigateTo({
+                url: '../evaluation/evaluation?id='+data.orderFormId
+              })
+            }, 1500);
+          })
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          return
         }
       }
+    }) 
+  },
+  fail_cb() {
+    wx.hideLoading()
+    wx.showToast({
+      title: '操作失败,请检查网络',
+      icon: 'none',
+      duration: 2000
     })
   }
 })

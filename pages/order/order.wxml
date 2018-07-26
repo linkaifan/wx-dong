@@ -1,16 +1,67 @@
 <!-- pages/order/order.wxml -->
 <view id="order">
   <view class="nav">
-    <view class="nav-item {{curIndex == index?'nav-active':''}}" wx:key="{{index}}" 
-    data-i="{{index}}" bindtap="changeCurIndex" wx:for="{{tabs}}" >
+    <view class="nav-item {{curIndex == index?'nav-active':''}}" wx:key="{{index}}" data-i="{{index}}" bindtap="changeCurIndex" wx:for="{{tabs}}">
       {{tabs[index]}}
     </view>
   </view>
   <view class="content">
     <!-- 待支付 -->
-    <view class="pay"></view>
+    <view class="pay" hidden="{{curIndex != 0}}">
+      <view class="takeBox contain" wx:for="{{pays}}" wx:key="{{index}}">
+        <view class="takeBox-head df-sb">
+          <text>东方城东兴隆食品商行 ></text>
+          <text class="t-red">请尽快付款</text>
+        </view>
+        <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+          <image src="{{good.goods.picture}}" class="takeBox-img" />
+          <view class="takeBox-info">
+            <view class="name">{{good.goods.name}}</view>
+            <view class="weight">规格:{{good.price.weight}}</view>
+          </view>
+          <view class="t-right">
+            <view class="t-bold">￥{{good.price.price}}</view>
+            <view>×{{good.price.buyNum}}</view>
+          </view>
+        </view>
+        <view class="takeBox-foot">
+          <view>合计：￥{{item.sum}}</view>
+          <view class="line"></view>
+          <view>
+            <text class="takeBox-btn first-btn" data-i="{{index}}" catchtap="pay">确认付款</text>
+            <text class="takeBox-btn" data-i="{{index}}" catchtap="cancle">取消订单</text>
+          </view>
+        </view>
+      </view>
+    </view>
     <!-- 待发货 -->
-    <view class="wait"></view>
+    <view class="wait" hidden="{{curIndex != 1}}">
+      <view class="takeBox contain" wx:for="{{waits}}" wx:key="{{index}}">
+        <view class="takeBox-head df-sb">
+          <text>东方城东兴隆食品商行 ></text>
+          <text class="t-red">等待发货</text>
+        </view>
+        <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+          <image src="{{good.goods.picture}}" class="takeBox-img" />
+          <view class="takeBox-info">
+            <view class="name">{{good.goods.name}}</view>
+            <view class="weight">规格:{{good.price.weight}}</view>
+          </view>
+          <view class="t-right">
+            <view class="t-bold">￥{{good.price.price}}</view>
+            <view>×{{good.price.buyNum}}</view>
+          </view>
+        </view>
+        <view class="takeBox-foot">
+          <view>合计：￥{{item.sum}}</view>
+          <view class="line"></view>
+          <view>
+            <text class="takeBox-btn first-btn" data-i="{{index}}" catchtap="">提醒发货</text>
+            <text class="takeBox-btn" data-i="{{index}}" catchtap="">退 款</text>
+          </view>
+        </view>
+      </view>
+    </view>
     <!-- 待收货 -->
     <view class="take" hidden="{{curIndex != 2}}">
       <view class="takeBox contain" wx:for="{{takes}}" wx:key="{{index}}">
@@ -18,29 +69,73 @@
           <text>东方城东兴隆食品商行 ></text>
           <text class="t-red">卖家已发货</text>
         </view>
-        <view class="takeBox-mid">
-          <image src="../../assets/test/1.jpg" class="takeBox-img"/>
+        <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+          <image src="{{good.goods.picture}}" class="takeBox-img" />
           <view class="takeBox-info">
-            <view class="name">{{item.name}}</view>
-            <view class="weight">规格:{{item.weight}}</view>
+            <view class="name">{{good.goods.name}}</view>
+            <view class="weight">规格:{{good.price.weight}}</view>
           </view>
-          <view>
-            <view class="t-bold">￥{{item.total}}</view>
-            <view>×1</view>
+          <view class="t-right">
+            <view class="t-bold">￥{{good.price.price}}</view>
+            <view>×{{good.price.buyNum}}</view>
           </view>
         </view>
         <view class="takeBox-foot">
-          <view>合计：￥16.80</view>
+          <view>合计：￥{{item.sum}}</view>
           <view class="line"></view>
           <view>
-            <text class="takeBox-btn" data-i="{{index}}" bindtap="complete">确认收货</text>
+            <text class="takeBox-btn" data-i="{{index}}" catchtap="gain">确认收货</text>
           </view>
         </view>
       </view>
     </view>
     <!-- 已完成 -->
-    <view class="com"></view>
+    <view class="com" hidden="{{curIndex != 3}}">
+      <view class="takeBox contain" wx:for="{{coms}}" wx:key="{{index}}">
+        <view class="takeBox-head df-sb">
+          <text>东方城东兴隆食品商行 ></text>
+          <text class="t-red">已完成</text>
+        </view>
+        <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+          <image src="{{good.goods.picture}}" class="takeBox-img" />
+          <view class="takeBox-info">
+            <view class="name">{{good.goods.name}}</view>
+            <view class="weight">规格:{{good.price.weight}}</view>
+          </view>
+          <view class="t-right"> 
+            <view class="t-bold">￥{{good.price.price}}</view>
+            <view>×{{good.price.buyNum}}</view>
+          </view>
+        </view>
+        <view class="takeBox-foot">
+          <view>合计：￥{{item.sum}}</view>
+          <view class="line"></view>
+        </view>
+      </view>
+    </view>
     <!-- 已失效 -->
-    <view class="fail"></view>
+    <view class="fail" hidden="{{curIndex != 4}}">
+      <view class="takeBox contain" wx:for="{{fails}}" wx:key="{{index}}">
+        <view class="takeBox-head df-sb">
+          <text>东方城东兴隆食品商行 ></text>
+          <text class="t-red">已失效</text>
+        </view>
+        <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+          <image src="{{good.goods.picture}}" class="takeBox-img" />
+          <view class="takeBox-info">
+            <view class="name">{{good.goods.name}}</view>
+            <view class="weight">规格:{{good.price.weight}}</view>
+          </view>
+          <view class="t-right">
+            <view class="t-bold">￥{{good.price.price}}</view>
+            <view>×{{good.price.buyNum}}</view>
+          </view>
+        </view>
+        <view class="takeBox-foot">
+          <view>合计：￥{{item.sum}}</view>
+          <view class="line"></view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

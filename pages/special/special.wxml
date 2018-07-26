@@ -1,25 +1,7 @@
 <!--pages/special/special.wxml-->
 <view id="special">
-  <view class="box contain" wx:for="{{items}}" wx:key="{{index}}">
-    <view class="df">
-      <image src="../../assets/test/1.jpg" class="box-img"/>
-      <view>
-        <text class="t-bold h50">{{item.name}}</text>
-        <text class="t-gray h50">{{item.address}}</text>
-        <text class="h50">{{item.weight}}</text>
-        <text class="t-red h50">￥ {{item.priceRage}}</text>
-      </view>
-    </view>
-    <view class="category" wx:for="{{item.categorys}}" wx:key="{{index}}">
-      <view>
-        <text class="h50">{{item.name}}</text>
-        <view class="df-sb">
-          <text class="h50 t-red">￥ {{item.price}}</text>
-          <nbtn good="{{item}}" bind:add="add" 
-          bind:subtract="subtract" data-i="{{index}}"></nbtn>
-        </view>
-      </view>
-    </view>
+  <view class="result">
+    <good wx:for="{{goods}}" good="{{item}}" wx:key="{{index}}" bind:updata="updata"></good>
   </view>
   <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
 </view>

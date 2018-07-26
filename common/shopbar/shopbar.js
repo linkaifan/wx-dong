@@ -20,12 +20,10 @@ Component({
    */
   methods: {
     toShop(){     
-/*       wx.switchTab({
+      wx.switchTab({
         url: '../shop/shop'
-      }) */
-      console.log(app.globalData.shops);
-      
+      })
+      console.log(app.globalData.shops);      
     }
   },
-
 })

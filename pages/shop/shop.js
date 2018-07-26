@@ -1,5 +1,7 @@
 // pages/shop/shop.js
 const app = getApp()
+const service = require('../config.js').service
+const utils = require('../config.js').utils
 Page({
 
   /**
@@ -7,6 +9,10 @@ Page({
    */
   data: {
     shops: [],
+    token:null,
+    //sum是跟待确定订单一样的选中的才算，不是app.globalData.sum
+    sum:0,
+    isCheckAll:false
   },
 
   /**
@@ -27,23 +33,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      shops: app.globalData.shops
+    wx.showLoading({
+      title: '加载中',
+      mask:true
     })
+    setTimeout(() => {
+      this.getShoppingCar()
+      wx.hideLoading()
+    }, 1000);        
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.editShoppingCar()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.editShoppingCar()
   },
 
   /**
@@ -66,8 +77,30 @@ Page({
   onShareAppMessage: function () {
 
   },
-  checkboxChange: function (e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+  checkboxChange: function (e) {    
+    let i = e.currentTarget.dataset.i      
+    app.globalData.shops[i].isCheck = !app.globalData.shops[i].isCheck
+    this.setData({
+      shops: app.globalData.shops
+    })  
+    this.updata()
+  },
+  checkAll(e){
+    let isCheckAll = this.data.isCheckAll       
+    if (isCheckAll) {
+      app.globalData.shops.forEach(arr=>{
+        arr.isCheck = false
+      })            
+    }else{     
+      app.globalData.shops.forEach(arr=>{
+        arr.isCheck = true
+      }) 
+    }
+    this.setData({
+      shops: app.globalData.shops,
+      isCheckAll: !this.data.isCheckAll
+    }) 
+    this.updata()
   },
   //删除购物车商品
   move(e) {
@@ -78,53 +111,132 @@ Page({
       content: '确认要删除该商品吗？',
       success: function (res) {
         if (res.confirm) {
-          console.log('用户点击确定')
-          self.data.shops.splice(i,1)
+          app.globalData.shops.splice(i,1)
           self.setData({
-            shops:self.data.shops
-          })         
+            shops:app.globalData.shops
+          })       
+          self.updata()  
         } else if (res.cancel) {
-          console.log('删除商品:用户点击取消')
+          return
         }
       }
     })
   },
   toSubmit() {   
-    wx.navigateTo({
-      url: '../submit/submit'
-    })
-  },
-  add(e) {
-    let i = e.currentTarget.dataset.i
-    this.data.shops[i].count += 1;
-    this.setData({
-      shops: this.data.shops
-    })
-  },
-  subtract(e) {
-    let self = this
-    let i = e.currentTarget.dataset.i
-    if (this.data.shops[i].count == 1) {
-      wx.showModal({
-        title: '温馨提示',
-        content: '确认要删除该商品吗？',
-        success: function (res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-            self.data.shops.splice(i,1)
-            self.setData({
-              shops:self.data.shops
-            }) 
-          } else if (res.cancel) {
-            console.log('删除商品：用户点击取消')
-          }
-        }
-      })
-    } else {
-      this.data.shops[i].count -= 1;
-      this.setData({
-        shops: this.data.shops
+    //判断至少一个已选择商品，才能提交
+    let isEmpty = true
+    if (this.data.sum) {
+      isEmpty = false
+    }
+    if (!isEmpty) {
+      wx.navigateTo({
+        url: '../submit/submit'
+      })      
+    }else{
+      wx.showToast({
+        title: '请至少选择一个商品',
+        icon: 'none',
+        duration: 2000,
+        mask: true
       })
     }
+
+  },
+  updata(){
+    let sum = 0
+    this.data.shops.forEach(arr=>{
+      if (arr.isCheck) {
+        sum += arr.price.price * arr.price.buyNum
+      }
+    })
+    this.setData({
+      sum,
+    })
+  },
+  getShoppingCar(){
+    let self = this
+    if (wx.getStorageSync('token')) {
+      self.setData({
+        token: wx.getStorageSync('token')
+      })
+      utils.setData(this, service.shoppingCar,{},function (res) {                   
+        app.globalData.shops = res.data  
+        app.globalData.sum = 0
+        app.globalData.total = 0
+        app.globalData.shops.forEach(item => {
+          app.globalData.sum += item.price.price * item.buyNum
+          app.globalData.total += item.buyNum
+        });     
+        console.log('获得购物车信息'); 
+        self.setData({
+          shops: res.data
+        })  
+        self.updata()       
+      })
+    } 
+  },
+  editShoppingCar(){      
+    let self = this
+    app.globalData.shops.forEach((item)=>{
+      if (item.goods) {        
+        item.goodsId = item.goods.id
+        item.priceId = item.price.id
+        item.buyNum = item.price.buyNum
+        if (!item.isCheck) {
+          item.isCheck = false
+        }else{
+          item.isCheck = true
+        }
+        delete item.goods
+        delete item.id
+        delete item.price
+      }
+    })      
+    wx.request({
+      url: service.updateShoppingCar,
+      method: "POST",
+      header: {
+        'Authorization': 'Bearer ' + self.data.token
+      },
+      data:app.globalData.shops,
+      success: function (res) {
+        console.log('修改购物车');               
+      }
+    }) 
+  },
+  editNum(e){    
+    let mode = e.currentTarget.dataset.mode
+    let i = e.currentTarget.dataset.i   
+    if (mode == 1) {
+      //加1
+      app.globalData.shops[i].price.buyNum++
+      app.globalDatatotal++
+      app.globalData.sum += app.globalData.shops[i].price.price
+      this.setData({
+        shops: app.globalData.shops
+      })
+      console.log(app.globalData.shops);
+      
+    }else if( mode == 0){
+      //减1
+      if (app.globalData.shops[i].price.buyNum == 1) {
+        this.move({
+          currentTarget:{
+            dataset:{
+              index:i
+            }
+          }
+        })       
+      }else{
+        app.globalData.shops[i].price.buyNum--
+        app.globalData.total--
+        app.globalData.sum -= app.globalData.shops[i].price.price
+        this.setData({
+          shops: app.globalData.shops
+        })
+      }
+
+    }
+    this.updata()
   }
 })

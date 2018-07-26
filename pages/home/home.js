@@ -12,9 +12,9 @@ Page({
     inputVal: "",
     banners: [],
     citys:[],
-    //暂时默认广州id1
+    //暂时默认海口id1
     cityId:1,
-    city:'广州',
+    city:'城市',
     types: [{
         src: "../../assets/home/z1.png",
         name: "鸭鸭专区",
@@ -60,94 +60,8 @@ Page({
         bigTypeId: "d118f084725a4203bf4ebb1618e9e966"
       }
     ],
-    discounts: [
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "11 kg",
-        price: "11",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "22 kg",
-        price: "22",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "33 kg",
-        price: "33",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "44 kg",
-        price: "44",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "55 kg",
-        price: "55",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "66 kg",
-        price: "66",
-      }
-    ],
-    recommendations: [
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "11 kg",
-        price: "11",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "22 kg",
-        price: "22",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "33 kg",
-        price: "33",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "44 kg",
-        price: "44",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "55 kg",
-        price: "55",
-      },
-      {
-        img: "../../assets/test/1.jpg",
-        name: "印度飞饼",
-        seller: "广工 广州番禺",
-        weight: "66 kg",
-        price: "66",
-      }
-    ]
+    discounts:[],
+    recommendations:[]
 
   },
 
@@ -155,17 +69,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //提醒用户设置城市id
+    if (wx.getStorageSync('cityId')) {
+      this.setData({
+        cityId: wx.getStorageSync('cityId')
+      })
+    }else{
+      wx.showToast({
+        title: '请点击左上角选择城市',
+        icon: 'none',
+        duration: 2500,
+        mask: true
+      })
+    }
+    let self = this
     let cityId = this.data.cityId
+    app.globalData.cityId = cityId 
     //获取banners,citys,推荐区recommendations,促销区discounts
     utils.getData(this,service.getBannerPicture,'banners')
-    utils.getData(this,service.getCity,'citys')
-    utils.getData(this,service.selectStateGoods,'tuijian',{
+    utils.getData(this,service.getCity,'citys',{},{},function () {
+      self.data.citys.forEach(arr => {
+        if (arr.id == self.data.cityId) {
+          self.setData({
+            city:arr.city
+          })
+        }
+      });
+    })
+    utils.getData(this,service.selectStateGoods,'discounts',{
       cityId,state:2,num:0
     })
-    utils.getData(this,service.selectStateGoods,'cuxiao',{
+    utils.getData(this,service.selectStateGoods,'recommendations',{
       cityId,state:3,num:0
     })
-    app.globalData.cityId = cityId    
+       
   },
 
   /**
@@ -246,6 +183,7 @@ Page({
       city:this.data.citys[i].city,
       cityId:this.data.citys[i].id
     })
+    wx.setStorageSync('cityId', this.data.cityId)
     app.globalData.cityId = this.data.cityId    
   },
   search(){
@@ -258,5 +196,17 @@ Page({
     wx.navigateTo({
       url: '../type/type?bigTypeIndex='+i
     })   
+  },
+  more(e){
+    let state = e.currentTarget.dataset.state
+    wx.navigateTo({
+      url: '../special/special?state='+state
+    })   
+  },
+  toDetail(e){
+    let goodid = e.currentTarget.dataset.goodid
+    wx.navigateTo({
+      url: '../detail/detail?goodsId='+goodid
+    })  
   }
 })

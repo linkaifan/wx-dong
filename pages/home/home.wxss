@@ -6,6 +6,7 @@
 /* 顶部搜索栏 */
 .address{
   margin-right: 30rpx;
+  width: 80rpx;
 }
 /* banner轮播图 */
 .slide-image{

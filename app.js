@@ -1,39 +1,38 @@
 //app.js
+const service = require('./pages/config.js').service
+const utils = require('./pages/config.js').utils
 App({
   onLaunch: function () {
-    this.globalData.shops.forEach(item => {
-      this.globalData.sum += item.price * item.count
-      this.globalData.total += item.count
-    });    
-    console.log('购物车总价：'+ this.globalData.sum);
-    console.log('购物车总数量：'+ this.globalData.total);
-    
+    let self = this
+    if (wx.getStorageSync('token')) {
+      //判断是否登录，登录了就获取购物车信息
+			wx.request({
+				url: service.shoppingCar,
+				method: "GET",
+				header: {
+					'Authorization': 'Bearer ' + wx.getStorageSync('token')
+				},
+				success: function (res) {					
+          self.globalData.shops = res.data 
+          self.globalData.shops.forEach(item => {
+            self.globalData.sum += item.price.price * item.buyNum
+            self.globalData.total += item.buyNum
+          });              
+				},
+				fail: function(res) {					
+				}
+			}) 
+    }
   },
   globalData: {
     userInfo: null,
-    isLogin:false,
-    cityId:null,
-    shops:[
-      {
-        name:'长江桂柳A级白条鸭4.2-5.0斤',
-        seller:'广州番禺 长江桂柳',
-        price:139.00,
-        weight:"13.2kg/件",
-        count:1,
-        isChecked:true,
-      },
-      {
-        name:'长江桂xxA级白条鸭4.2-5.0斤',
-        seller:'广州番禺 长江xxx',
-        price:139.00,
-        weight:"13.2kg/件",
-        count:3,
-        isChecked:false,
-      },
-    ],
+    cityId:1,
+    shops:[],
     //总金额
     sum:0,
     //总数量，
-    total:0
+    total:0,
+    //默认地址
+    addressId:null
   }
 })

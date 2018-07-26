@@ -2,9 +2,9 @@
 <view id="submit">
   <view class="head df-sb contain" catchtap="toMe">
     <view>
-      <view class="h50">收货人：{{}}</view>
-      <view class="h50">手机：{{}}</view>
-      <view class="h50">收货地址：{{}}</view>
+      <view class="h50">收货人：{{address.userName}}</view>
+      <view class="h50">手机：{{address.userPhone}}</view>
+      <view class="h50">收货地址：{{address.address}}</view>
     </view>
     <image src="../../assets/right.png" class="set-icon" />
   </view>
@@ -16,7 +16,7 @@
     <view class="line"></view>
     <view class="df-sb">
       <text class="h50">商品总额:</text>
-      <text class="h50 t-red">{{total}} 元</text>
+      <text class="h50 t-red">{{sum}} 元</text>
     </view>
     <view>
       备注：
@@ -24,19 +24,20 @@
       type="text" confirm-type="done" data-key="note" />
     </view>
   </view>
-  <view class="box contain df" wx:for="{{shops}}" wx:key="{{index}}">
-    <image src="../../assets/test/1.jpg" class="box-img" />
+  <view class="box contain df" wx:for="{{showGoods}}" wx:key="{{index}}">
+    <image src="{{item.goods.picture}}" class="box-img" />
     <view class="box-info">
-      <view class="name">{{item.name}}</view>
-      <view class="weight">规格:{{item.weight}}</view>
+      <view class="name">{{item.goods.brand}} </view>
+      <view class="name">{{item.goods.name}}</view>
+      <view class="weight">规格:{{item.price.weight}}</view>
     </view>
     <view>
-      <view class="t-bold">￥{{item.price}}</view>
-      <view>×1</view>
+      <view class="t-bold">￥{{item.price.price}}</view>
+      <view>× {{item.price.buyNum}}</view>
     </view>
   </view>
   <view class="bar df-sb">
-    <text class="t-bold">应付金额：278.00元</text>
-    <text class="submit-btn">提交订单</text>
+    <text class="t-bold">应付金额：{{sum}} </text>
+    <text class="submit-btn" catchtap="submit">提交订单</text>
   </view>
 </view>

@@ -10,7 +10,8 @@
     "pages/special/special",
     "pages/evaluation/evaluation",
     "pages/goodlist/goodlist",
-    "pages/type/type"
+    "pages/type/type",
+    "pages/allOrder/allOrder"
   ],
   "window": {
     "backgroundTextStyle": "light",

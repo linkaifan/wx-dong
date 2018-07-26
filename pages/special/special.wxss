@@ -6,13 +6,6 @@
   padding-top: 10rpx;
   box-sizing: border-box;
 }
-.box{
-  background-color: #fff;
-  border: 1px solid #d2d2d4;
-  margin:0 10rpx 40rpx 10rpx;
-}
-.box-img{
-  width: 180rpx;
-  height: 180rpx;
-  margin-right: 30rpx;
+.result{
+  padding-bottom: 100rpx; 
 }

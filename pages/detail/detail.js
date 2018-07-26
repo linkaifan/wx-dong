@@ -1,5 +1,7 @@
 // pages/detail/detail.js
 const app = getApp()
+const service = require('../config.js').service
+const utils = require('../config.js').utils
 Page({
 
   /**
@@ -8,43 +10,24 @@ Page({
   data: {
     sum: 0,
     total: 0,
-    imgs: [
-      '../../assets/test/1.jpg',
-      '../../assets/test/2.jpeg',
-      '../../assets/test/3.jpeg',
-    ],
-    good: {
-      name: '六和 鸭腿',
-      brand: "新希望六和",
-      seller:'广州番禺 六合食品',
-      //厂名
-      factory: "广东工业大学",
-      //存储方法
-      storage: "-18℃",
-      //保质期
-      shelf: "365",
-      //categorys是一个数组，就是有些商品有*12，*6这几种规格
-      categorys: [{
-        value: "650g*12盒",
-        price: 22,
-        count: 0
-      },{
-        value:"650g*6盒",
-        price:11,
-        count:0
-      }],
-      //备注
-      note: `一箱约38个，单个质量约260g,减肥啦大家发了大家发垃圾法
-      拉第就樊辣椒劳动法就法拉家纺辣椒粉垃圾法拉第就老夫加大了就`
-    }
-
+    good: null,
+    token:null,
+    evaluations:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let goodsId = options.goodsId
+    let header = {};
+    if (wx.getStorageSync('token')) {
+      header = {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+      }
+    } 
+    utils.getData(this, service.selectOneGoods, 'good', {goodsId},header)
+    utils.getData(this, service.selectCommentByGoodsId, 'evaluations', {goodsId},header)
   },
 
   /**
@@ -58,24 +41,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      total: app.globalData.total,
-      sum: app.globalData.sum,
+    wx.showLoading({
+      title: '加载中',
+      mask:true
     })
+    setTimeout(() => {
+      this.getShoppingCar()
+      wx.hideLoading()
+    }, 1000);   
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.editShoppingCar()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.editShoppingCar()
   },
 
   /**
@@ -98,70 +85,61 @@ Page({
   onShareAppMessage: function () {
 
   },
-  add(e) {    
-    let category = e.currentTarget.dataset.good
-    let i = e.currentTarget.dataset.i
-    let info = this.data.good
-    let shops = app.globalData.shops
-
-    info.categorys[i].count++ 
-    if (info.categorys[i].count == 1) {
-      //说明是购物车shops新增商品
-      console.log("新增商品进入购物车shops");     
-      shops.push({
-        name: info.name,
-        seller: info.seller,
-        price: category.price,
-        weight: category.value,
-        count: 1,
-        isChecked: false
-      })      
-    }
-    //点击事件控制的商品在购物车里的序号
-    let indexOfShops = -1;
-    shops.forEach((item,index) => {
-      if (info.name == item.name && category.value == item.weight ) {
-        indexOfShops = index
-      }
-    });
-
+  updata(){    
     this.setData({
-      sum: this.data.sum + category.price,
-      total: this.data.total + 1,
-      good: info
+      total: app.globalData.total,
+      sum: app.globalData.sum,
     })
-    app.globalData.sum = this.data.sum
-    app.globalData.total = this.data.total
-    shops[indexOfShops].count = info.categorys[i].count
   },
-  subtract(e) {
-    let category = e.currentTarget.dataset.good
-    let i = e.currentTarget.dataset.i
-    let info = this.data.good
-    let shops = app.globalData.shops
-
-    //点击事件控制的商品在购物车里的序号
-    let indexOfShops = -1;
-    shops.forEach((item,index) => {
-      if (info.name == item.name && category.value == item.weight ) {
-        indexOfShops = index
+  getShoppingCar(){
+    let self = this
+    if (wx.getStorageSync('token')) {
+      self.setData({
+        token: wx.getStorageSync('token')
+      })
+      utils.setData(this, service.shoppingCar,{},function (res) {                   
+        app.globalData.shops = res.data  
+        app.globalData.sum = 0
+        app.globalData.total = 0
+        app.globalData.shops.forEach(item => {
+          app.globalData.sum += item.price.price * item.buyNum
+          app.globalData.total += item.buyNum
+        });     
+        console.log('获得购物车信息');   
+        self.setData({
+          total: app.globalData.total,
+          sum: app.globalData.sum     
+        })
+      })
+    } 
+  },
+  editShoppingCar(){  
+    let self = this
+    app.globalData.shops.forEach((item)=>{
+      if (item.goods) {        
+        item.goodsId = item.goods.id
+        item.priceId = item.price.id
+        item.buyNum = item.price.buyNum
+        if (!item.isCheck) {
+          item.isCheck = false
+        }else{
+          item.isCheck = true
+        }
+        delete item.goods
+        delete item.id
+        delete item.price
       }
-    });
-    info.categorys[i].count--  
-    if (info.categorys[i].count == 0) {
-      //说明是购物车shops删除商品
-      console.log("删除购物车商品shops");     
-      shops.splice(indexOfShops,1)      
-    }else{
-      shops[indexOfShops].count = info.categorys[i].count
-    }
-
-    this.setData({
-      sum: this.data.sum - category.price,
-      total: this.data.total - 1,
-      good: info
-    })
-    app.globalData.sum = this.data.sum
-    app.globalData.total = this.data.total
+    })      
+    wx.request({
+      url: service.updateShoppingCar,
+      method: "POST",
+      header: {
+        'Authorization': 'Bearer ' + self.data.token
+      },
+      data:app.globalData.shops,
+      success: function (res) {
+        console.log('修改购物车');  
+      }
+    }) 
   }
 })

@@ -30,13 +30,61 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 8,
 			"list": [
 				{
 					"id": 0,
-					"name": "test",
+					"name": "分类页",
 					"pathName": "pages/type/type",
 					"query": "bigTypeIndex=1"
+				},
+				{
+					"id": 1,
+					"name": "推荐区",
+					"pathName": "pages/special/special",
+					"query": "state=3"
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/detail/detail",
+					"query": "goodsId=1"
+				},
+				{
+					"id": 3,
+					"name": "dingdan",
+					"pathName": "pages/order/order",
+					"query": "i=1"
+				},
+				{
+					"id": 4,
+					"name": "搜索页",
+					"pathName": "pages/goodlist/goodlist",
+					"query": "search=白条"
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shop/shop",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "订单",
+					"pathName": "pages/order/order",
+					"query": "i=0"
+				},
+				{
+					"id": -1,
+					"name": "评价",
+					"pathName": "pages/evaluation/evaluation",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "全部订单",
+					"pathName": "pages/allOrder/allOrder",
+					"query": ""
 				}
 			]
 		}

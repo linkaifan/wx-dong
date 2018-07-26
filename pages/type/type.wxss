@@ -37,4 +37,17 @@
 }
 .res-content{
   background-color: #fff;
+  flex-wrap: wrap;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.goods{
+  width: 100%;
+}
+.sm-type{
+  width: 33%;
+}
+.sm-img{
+  width: 150rpx;
+  height: 150rpx;
 }

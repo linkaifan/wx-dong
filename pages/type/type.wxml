@@ -21,15 +21,21 @@
   </view>
   <view class="content">
     <view class="nav">
-      <view class="big-type {{index==bigTypeIndex?'big-active':''}}" wx:for="{{types}}" 
-      wx:key="{{index}}" data-i="{{index}}" catchtap="changeBigIndex">
+      <view class="big-type {{index==bigTypeIndex?'big-active':''}}" wx:for="{{types}}" wx:key="{{index}}" data-i="{{index}}" catchtap="changeBigIndex">
         {{item.name}}
       </view>
     </view>
     <view class="result">
-      <view class="res-title">{{types[bigTypeIndex].name}}</view>
-      <view class="res-content">
-        <view class="sm-type" wx:for="{{smTypes}}" wx:key="{{index}}">{{item}}</view>
+      <view class="res-title" hidden="{{goods}}">{{types[bigTypeIndex].name}}</view>
+      <view class="res-title" hidden="{{!goods}}" catchtap="return_sm">上一级</view>
+      <view class="res-content df">
+        <view class="sm-type" wx:for="{{smTypes}}" wx:key="{{index}}" catchtap="getGoods" data-type_id="{{item.id}}" hidden="{{goods}}">
+          <image src="{{item.img}}" class="sm-img" />
+          <view class="h50">{{item.name}}</view>
+        </view>
+        <view class="goods" hidden="{{!goods}}" >
+          <good wx:for="{{goods}}" wx:key="{{index}}" good="{{item}}"></good>
+        </view>
       </view>
     </view>
   </view>
