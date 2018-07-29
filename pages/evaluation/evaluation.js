@@ -114,9 +114,7 @@ Page({
         goodsId: self.data.goods[i].goods.id
       }
       utils.setData(this,service.createComment,data,function (res) {    
-        if ( i = len -1) {
-          console.log('触发了几次');
-          
+        if ( i == len -1) {        
           wx.navigateTo({
             url: '../order/order?i=3'
           })

@@ -59,7 +59,7 @@ Page({
         token: wx.getStorageSync('token'),
         phone: wx.getStorageSync('phone'),
       })
-      //获取个人数据：地址，订单...等
+      //获取个人数据：地址...等
       utils.getData(this, service.selectAddress, 'addressItems', {}, {
         'Authorization': 'Bearer ' + this.data.token
       })

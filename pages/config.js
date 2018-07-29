@@ -12,6 +12,7 @@ var config = {
 		host,
 		//user
 		login: host + '/login',
+		wxLogin: host + '/wxLogin',
 		register: host + '/register',
 		getSms: host + '/getSms',
 		updatePassword: host + '/updatePassword',

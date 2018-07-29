@@ -19,7 +19,7 @@
     </view>
   </view>
   <view class="title t-bold">商品详情</view>
-  <view class="contain info">
+  <view class="contain ">
     <text class="h50">品牌: {{good.brand}}</text>
     <view class="line2"></view>
     <text class="h50">厂名: {{good.factory}}</text>
@@ -29,6 +29,16 @@
     <text class="h50">保质期: {{good.shelfLife}}</text>
     <view class="line2"></view>
     <view>备注: {{good.remarks}}</view>
+  </view>
+  <view class="info">
+    <view class="title t-bold">评价 ({{evaluations.length || 0}})</view>
+    <view class="contain">
+      <view wx:for="{{evaluations}}" wx:key="{{index}}">
+        <view class="user">用户：{{item.user.account}}</view>
+        <view class="comment">{{item.star}}星好评： {{item.comment}}</view>
+        <view class="line"></view>
+      </view>
+    </view>
   </view>
   <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
 </view>
