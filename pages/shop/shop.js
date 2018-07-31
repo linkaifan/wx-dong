@@ -33,6 +33,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //先判断是否登陆
+    if (!wx.getStorageSync('token')) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      })
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '../user/user'
+        })       
+      }, 1000);
+      return
+    }
     const self = this
     wx.showLoading({
       title: '加载中',
@@ -53,14 +68,22 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    }
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    }
   },
 
   /**

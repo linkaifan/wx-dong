@@ -80,16 +80,22 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log('加入购物车onhide');
-    this.editShoppingCar()  
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    }
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('加入购物车onunload');
-    this.editShoppingCar()  
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    } 
   },
 
   /**

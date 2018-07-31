@@ -38,6 +38,10 @@
         </view>
       </view>
     </view>
+    <view hidden="{{!(shops.length==0)}}" class="no-shops">
+      <navigator url="../home/home" open-type="switchTab" class="toBtn">去购物</navigator>
+      <text class="h50">购物车竟然是空的！</text>     
+    </view>
   </view>
   <view class="bar df-sb">
     <view class="bar-left">

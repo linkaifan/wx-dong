@@ -60,14 +60,22 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    }
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return 
+    }else{
+      this.editShoppingCar()
+    }
   },
 
   /**

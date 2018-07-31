@@ -74,3 +74,18 @@
 .bar-t{
   min-width: 250rpx;
 }
+.no-shops{
+  text-align: center;
+  height: 150rpx;
+  padding: 50rpx;
+  background-color: #fff;
+}
+.toBtn{
+  width: 200rpx;
+  background-color: #fe0000;
+  color: #fff;
+  margin: 30rpx auto;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 5px;
+}

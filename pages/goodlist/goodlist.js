@@ -26,13 +26,13 @@ Page({
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       }
-    }    
+    }
     utils.getData(this, service.selectGoods, 'goods', {
       message: options.search,
       cityId: app.globalData.cityId,
-    },header)
+    }, header)
   },
 
   /**
@@ -45,35 +45,41 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {  
+  onShow: function () {
     const self = this
     wx.showLoading({
       title: '加载中',
-      mask:true
+      mask: true
     })
-    let timer = setInterval(()=>{
+    let timer = setInterval(() => {
       if (app.globalData.isCom) {
         self.getShoppingCar()
         wx.hideLoading()
         app.globalData.isCom = false
-        clearInterval(timer)       
+        clearInterval(timer)
       }
-    },100) 
+    }, 100)
   },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log('加入购物车onhide');
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return
+    } else {
+      this.editShoppingCar()
+    }
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('加入购物车onunload');
-    this.editShoppingCar()
+    if (!wx.getStorageSync('token')) {
+      return
+    } else {
+      this.editShoppingCar()
+    }
   },
 
   /**
@@ -102,56 +108,56 @@ Page({
       total: app.globalData.total
     })
   },
-  getShoppingCar(){
+  getShoppingCar() {
     let self = this
     if (wx.getStorageSync('token')) {
       self.setData({
         token: wx.getStorageSync('token')
       })
-      utils.setData(this, service.shoppingCar,{},function (res) {                   
-        app.globalData.shops = res.data  
+      utils.setData(this, service.shoppingCar, {}, function (res) {
+        app.globalData.shops = res.data
         app.globalData.sum = 0
         app.globalData.total = 0
         app.globalData.shops.forEach(item => {
           app.globalData.sum += item.price.price * item.buyNum
           app.globalData.total += item.buyNum
-        });     
-        console.log('获得购物车信息');   
+        });
+        console.log('获得购物车信息');
         self.setData({
           total: app.globalData.total,
-          sum: app.globalData.sum     
+          sum: app.globalData.sum
         })
       })
-    } 
+    }
   },
-  editShoppingCar(){  
+  editShoppingCar() {
     let self = this
-    app.globalData.shops.forEach((item)=>{
-      if (item.goods) {        
+    app.globalData.shops.forEach((item) => {
+      if (item.goods) {
         item.goodsId = item.goods.id
         item.priceId = item.price.id
         item.buyNum = item.price.buyNum
         if (!item.isCheck) {
           item.isCheck = false
-        }else{
+        } else {
           item.isCheck = true
         }
         delete item.goods
         delete item.id
         delete item.price
       }
-    })      
+    })
     wx.request({
       url: service.updateShoppingCar,
       method: "POST",
       header: {
         'Authorization': 'Bearer ' + self.data.token
       },
-      data:app.globalData.shops,
+      data: app.globalData.shops,
       success: function (res) {
-        console.log('用以下data修改购物车成功'); 
-        app.globalData.isCom = true              
+        console.log('用以下data修改购物车成功');
+        app.globalData.isCom = true
       }
-    }) 
+    })
   }
 })

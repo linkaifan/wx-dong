@@ -74,9 +74,17 @@ Page({
         });            
       })
     } else {
-      wx.navigateTo({
-        url: '../user/user'
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 1000,
+        mask: true
       })
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '../user/user'
+        })       
+      }, 1000);
     }
 
   },
