@@ -43,7 +43,7 @@
     <view class="bar-left">
       <checkbox-group bindchange="checkAll">
         <label>
-          <checkbox color="#fe0000" checked="{{isCheackAll}}" />
+          <checkbox color="#fe0000" checked="{{isCheckAll}}" />
           全选
         </label>
       </checkbox-group>

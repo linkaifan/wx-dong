@@ -12,7 +12,7 @@ Page({
     token:null,
     //sum是跟待确定订单一样的选中的才算，不是app.globalData.sum
     sum:0,
-    isCheckAll:false
+    isCheckAll: false
   },
 
   /**
@@ -43,9 +43,7 @@ Page({
         self.getShoppingCar()
         wx.hideLoading()
         app.globalData.isCom = false
-        clearInterval(timer)
-        console.log(1);
-        
+        clearInterval(timer)      
       }
     },100)
        
@@ -88,9 +86,18 @@ Page({
   checkboxChange: function (e) {    
     let i = e.currentTarget.dataset.i      
     app.globalData.shops[i].isCheck = !app.globalData.shops[i].isCheck
+    //判断是否全选中了
     this.setData({
+      isCheckAll: true,
       shops: app.globalData.shops
-    })  
+    })
+    app.globalData.shops.forEach((arr)=>{
+      if (!arr.isCheck) {
+        this.setData({
+          isCheckAll: false
+        })
+      }
+    }) 
     this.updata()
   },
   checkAll(e){
