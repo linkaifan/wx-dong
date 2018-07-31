@@ -1,6 +1,6 @@
 <!-- pages/allOrder/allOrder.wxml -->
 <view id="allOrder">
-  <view class="takeBox contain" wx:for="{{orders}}" wx:key="{{index}}">
+  <view class="takeBox contain" wx:for="{{orders}}" wx:key="id">
     <view class="takeBox-head df-sb">
       <text>东方城东兴隆食品商行 ></text>
       <text class="t-red" hidden="{{item.state!=1}}">未付款</text>
@@ -9,7 +9,7 @@
       <text class="t-red" hidden="{{item.state!=7}}">已完成</text>
       <text class="t-red" hidden="{{item.state!=5}}">已失效</text>
     </view>
-    <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="{{index}}" wx:for-item="good">
+    <view class="takeBox-mid" wx:for="{{item.goodsList}}" wx:key="id" wx:for-item="good">
       <image src="{{good.goods.picture}}" class="takeBox-img" />
       <view class="takeBox-info">
         <view class="name">{{good.goods.name}}</view>

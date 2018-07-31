@@ -24,7 +24,7 @@
       type="text" confirm-type="done" data-key="note" />
     </view>
   </view>
-  <view class="box contain df" wx:for="{{showGoods}}" wx:key="{{index}}">
+  <view class="box contain df" wx:for="{{showGoods}}" wx:key="id">
     <image src="{{item.goods.picture}}" class="box-img" />
     <view class="box-info">
       <view class="name">{{item.goods.brand}} </view>

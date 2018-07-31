@@ -1,7 +1,7 @@
 <!-- pages/shop/shop.wxml -->
 <view id="shop">
   <view class="content">
-    <view class="box contain" wx:for="{{shops}}" wx:key="{{index}}">
+    <view class="box contain" wx:for="{{shops}}" wx:key="id">
       <view class="box-head">
         <text>{{item.goods.brand}} {{item.goods.name}}</text>
         <view class="move-btn" bindtap="move" data-index="{{index}}">删除</view>

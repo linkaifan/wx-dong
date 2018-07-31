@@ -16,7 +16,7 @@
       </view>
       <view class="nav">
         <view class="o-item" data-i="{{index}}" catchtap="toOrder"
-        wx:for="{{tabs}}" wx:key="{{index}}">
+        wx:for="{{tabs}}" wx:key="index">
           <image src="{{item.img}}" class="nav-icon" />
           <view>{{item.value}}</view> 
         </view>
@@ -28,7 +28,7 @@
         <text class="o-T">配送地址</text>
         <text class="o-t" bindtap="showWrap" data-index="-1">新增地址 ></text>
       </view>
-      <view class="a-box" wx:for="{{addressItems}}" wx:key="index">
+      <view class="a-box" wx:for="{{addressItems}}" wx:key="id">
         <view class="a-info">
           <view class="a-t">
             <text>{{item.userName}}</text>

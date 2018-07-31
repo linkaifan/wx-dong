@@ -1,6 +1,6 @@
 <!-- pages/evaluation/evaluation.wxml -->
 <view class="evaluation ">
-  <view class="contain" wx:for="{{goods}}" wx:key="{{index}}">
+  <view class="contain" wx:for="{{goods}}" wx:key="id">
     <view class="df">
       <image src="{{item.goods.picture}}" class="e-img" />
       <view>
