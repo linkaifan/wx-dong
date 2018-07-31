@@ -33,14 +33,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    const self = this
     wx.showLoading({
       title: '加载中',
       mask:true
     })
-    setTimeout(() => {
-      this.getShoppingCar()
-      wx.hideLoading()
-    }, 1000);        
+    let timer = setInterval(()=>{
+      if (app.globalData.isCom) {
+        self.getShoppingCar()
+        wx.hideLoading()
+        app.globalData.isCom = false
+        clearInterval(timer)
+        console.log(1);
+        
+      }
+    },100)
+       
   },
 
   /**
@@ -200,7 +208,8 @@ Page({
       },
       data:app.globalData.shops,
       success: function (res) {
-        console.log('修改购物车');               
+        console.log('修改购物车');     
+        app.globalData.isCom = true         
       }
     }) 
   },

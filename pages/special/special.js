@@ -60,7 +60,20 @@ Page({
     utils.getData(this,service.selectStateGoods,'goods',{
       state,num,cityId
     },header)
-    this.getShoppingCar()
+    //购物车
+    const self = this
+    wx.showLoading({
+      title: '加载中',
+      mask:true
+    })
+    let timer = setInterval(()=>{
+      if (app.globalData.isCom) {
+        self.getShoppingCar()
+        wx.hideLoading()
+        app.globalData.isCom = false
+        clearInterval(timer)
+      }
+    },100)
   },
 
   /**
@@ -201,7 +214,7 @@ Page({
       data:app.globalData.shops,
       success: function (res) {
         console.log('修改购物车');  
-        console.log(res.data);             
+        app.globalData.isCom = true            
       }
     }) 
   }

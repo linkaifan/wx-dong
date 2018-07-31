@@ -46,7 +46,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {  
-    this.getShoppingCar()  
+    const self = this
+    wx.showLoading({
+      title: '加载中',
+      mask:true
+    })
+    let timer = setInterval(()=>{
+      if (app.globalData.isCom) {
+        self.getShoppingCar()
+        wx.hideLoading()
+        app.globalData.isCom = false
+        clearInterval(timer)       
+      }
+    },100) 
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -138,7 +150,7 @@ Page({
       data:app.globalData.shops,
       success: function (res) {
         console.log('用以下data修改购物车成功'); 
-        console.log(app.globalData.shops);                    
+        app.globalData.isCom = true              
       }
     }) 
   }

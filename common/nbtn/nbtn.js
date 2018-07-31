@@ -49,12 +49,22 @@ Component({
       //点击事件控制的商品在购物车里的序号
       let indexOfShops = -1;
       if (mode == 1) {
-        //加1          
-        properties.good.buyNum++
+        //加1         
+        properties.good.num--
+        if (properties.good.num <= -1) {
+          wx.showToast({
+            title: '抱歉，库存不足',
+            icon: 'none',
+            duration: 1000
+          })
+          properties.good.num++
+          return
+        } 
+        properties.good.buyNum++   
         app.globalData.total++
         app.globalData.sum += properties.good.price
         this.setData({
-          good: this.properties.good,
+          good: properties.good,
         })
         if (properties.good.buyNum == 1) {
           //说明是购物车shops新增商品
@@ -81,14 +91,16 @@ Component({
             }
           });                    
         }
-
       } else if (mode == 0) {
         //减1
-        this.properties.good.buyNum--
-          app.globalData.total--
-          app.globalData.sum -= properties.good.price
+        console.log(properties.good.num);
+        
+        properties.good.num++
+        properties.good.buyNum--
+        app.globalData.total--
+        app.globalData.sum -= properties.good.price
         this.setData({
-          good: this.properties.good
+          good: properties.good
         })
         shops.forEach((item, index) => {
           //排除第一次编辑的时候连续添加2件以上商品从而没goods属性报错

@@ -7,6 +7,7 @@ App({
     //账号登录
     if (wx.getStorageSync('token')) {
       //判断是否登录，登录了就获取购物车信息
+      self.globalData.token = wx.getStorageSync('token')
       wx.request({
         url: service.shoppingCar,
         method: "GET",
@@ -24,6 +25,11 @@ App({
       })
     }
     //wx登录
+    if(!wx.getStorageSync('token')){
+      this.getOpenId()
+    }
+  },
+  getOpenId(){
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId
@@ -38,7 +44,7 @@ App({
             header: {
               "content-type": "application/x-www-form-urlencoded"
             },
-            success: (res) => {
+            success: (res) => {              
               if (res.statusCode == 200) {
                 wx.setStorageSync('openid', res.data.openid)              
               }else{
@@ -70,6 +76,8 @@ App({
     //总数量，
     total: 0,
     //默认地址
-    addressId: null
+    addressId: null,
+    //用于操作购物车的页面，当上一个页面更新购物车成功后为true，下一个页面才去获取购物车信息
+    isCom:true
   }
 })
