@@ -8,13 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sum:0,
-    total:0,
-    goods:null,
+    sum: 0,
+    total: 0,
+    goods: [],
     //控制获取商品的参数num,每次触底加载+6,记得返回的时候置0
     num: 0,
-    state:null,
-    token:null
+    state: null,
+    token: null
   },
 
   /**
@@ -28,11 +28,11 @@ Page({
     if (state == 2) {
       wx.setNavigationBarTitle({
         title: '推荐区'
-      })      
-    }else if (state == 3) {
+      })
+    } else if (state == 3) {
       wx.setNavigationBarTitle({
         title: '促销区'
-      })       
+      })
     }
   },
 
@@ -40,7 +40,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -49,31 +49,35 @@ Page({
   onShow: function () {
     let state = this.data.state
     let num = this.data.num
-    let cityId = app.globalData.cityId  
+    let cityId = app.globalData.cityId
     //获取商品goods
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       }
-    }     
-    utils.getData(this,service.selectStateGoods,'goods',{
-      state,num,cityId
-    },header)
+    }
+    utils.getData(this, service.selectStateGoods, 'goods', {
+      state,
+      num,
+      cityId
+    }, header)
     //购物车
     const self = this
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    })
-    let timer = setInterval(()=>{
-      if (app.globalData.isCom) {
-        self.getShoppingCar()
-        wx.hideLoading()
-        app.globalData.isCom = false
-        clearInterval(timer)
-      }
-    },100)
+    if (wx.getStorageSync("token")) {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      let timer = setInterval(() => {
+        if (app.globalData.isCom) {
+          self.getShoppingCar()
+          wx.hideLoading()
+          app.globalData.isCom = false
+          clearInterval(timer)
+        }
+      }, 100)
+    }
   },
 
   /**
@@ -81,8 +85,8 @@ Page({
    */
   onHide: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
     }
   },
@@ -92,41 +96,58 @@ Page({
    */
   onUnload: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
-    } 
+    }
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    const self = this
+    if (wx.getStorageSync('token')) {
+      self.getShoppingCar(self.getGoodsByNum)
+    } else {
+      self.getGoodsByNum()
+    }
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  getGoodsByNum() {
     let self = this
-    let num = this.data.num+6
+    let num = this.data.num + 6
     let state = this.data.state
-    let cityId = app.globalData.cityId  
+    let cityId = app.globalData.cityId
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       }
-    }   
+    }
     wx.showLoading({
       title: '加载中',
       mask: true
-    })  
+    })
     wx.request({
       url: service.selectStateGoods,
       data: {
-        num,state,cityId
+        num,
+        state,
+        cityId
       },
       header,
       success: function (res) {
@@ -137,34 +158,26 @@ Page({
             icon: 'none',
             duration: 2000
           })
-        }else{
+        } else {
           self.data.goods = self.data.goods.concat(res.data)
           self.setData({
-            goods:self.data.goods,
-            num:self.data.num+6
+            goods: self.data.goods,
+            num: self.data.num + 6
           })
         }
       },
-      fail: function() {
+      fail: function () {
         this.fail_cb()
       }
     })
-    
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
-  updata(){
+  updata() {
     this.setData({
       sum: app.globalData.sum,
       total: app.globalData.total
     })
   },
-  fail_cb(){
+  fail_cb() {
     wx.hideLoading()
     wx.showToast({
       title: '操作失败,请检查网络',
@@ -172,56 +185,59 @@ Page({
       duration: 2000
     })
   },
-  getShoppingCar(){
+  getShoppingCar(cb) {
     let self = this
     if (wx.getStorageSync('token')) {
       self.setData({
         token: wx.getStorageSync('token')
       })
-      utils.setData(this, service.shoppingCar,{},function (res) {                   
-        app.globalData.shops = res.data  
+      utils.setData(this, service.shoppingCar, {}, function (res) {
+        app.globalData.shops = res.data
         app.globalData.sum = 0
         app.globalData.total = 0
         app.globalData.shops.forEach(item => {
           app.globalData.sum += item.price.price * item.buyNum
           app.globalData.total += item.buyNum
-        });     
-        console.log('获得购物车信息');   
+        });
+        console.log('获得购物车信息');
         self.setData({
           total: app.globalData.total,
-          sum: app.globalData.sum     
+          sum: app.globalData.sum
         })
+        if (cb) {
+          cb()
+        }
       })
-    } 
+    }
   },
-  editShoppingCar(){  
+  editShoppingCar() {
     let self = this
-    app.globalData.shops.forEach((item)=>{
-      if (item.goods) {        
+    app.globalData.shops.forEach((item) => {
+      if (item.goods) {
         item.goodsId = item.goods.id
         item.priceId = item.price.id
         item.buyNum = item.price.buyNum
         if (!item.isCheck) {
           item.isCheck = false
-        }else{
+        } else {
           item.isCheck = true
         }
         delete item.goods
         delete item.id
         delete item.price
       }
-    })      
+    })
     wx.request({
       url: service.updateShoppingCar,
       method: "POST",
       header: {
         'Authorization': 'Bearer ' + self.data.token
       },
-      data:app.globalData.shops,
+      data: app.globalData.shops,
       success: function (res) {
-        console.log('修改购物车');  
-        app.globalData.isCom = true            
+        console.log('修改购物车');
+        app.globalData.isCom = true
       }
-    }) 
+    })
   }
 })

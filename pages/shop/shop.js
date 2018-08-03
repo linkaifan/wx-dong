@@ -33,6 +33,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    const self = this
     //先判断是否登陆
     if (!wx.getStorageSync('token')) {
       wx.showToast({
@@ -47,21 +48,20 @@ Page({
         })       
       }, 1000);
       return
-    }
-    const self = this
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    })
-    let timer = setInterval(()=>{
-      if (app.globalData.isCom) {
-        self.getShoppingCar()
-        wx.hideLoading()
-        app.globalData.isCom = false
-        clearInterval(timer)      
-      }
-    },100)
-       
+    }else{
+      wx.showLoading({
+        title: '加载中',
+        mask:true
+      })
+      let timer = setInterval(()=>{
+        if (app.globalData.isCom) {
+          self.getShoppingCar()
+          wx.hideLoading()
+          app.globalData.isCom = false
+          clearInterval(timer)      
+        }
+      },100)
+    }     
   },
 
   /**
@@ -162,11 +162,7 @@ Page({
   },
   toSubmit() {   
     //判断至少一个已选择商品，才能提交
-    let isEmpty = true
     if (this.data.sum) {
-      isEmpty = false
-    }
-    if (!isEmpty) {
       wx.navigateTo({
         url: '../submit/submit'
       })      

@@ -33,7 +33,7 @@ Page({
     ],
     addressItems: [],
     detail: {},
-    isShow: false
+    isShow: false,
   },
 
   /**
@@ -273,6 +273,22 @@ Page({
     let i = e.currentTarget.dataset.i
     wx.navigateTo({
       url: `../order/order?i=${i}`
+    })
+  },
+  setting(){
+    let self = this
+    wx.showActionSheet({
+      itemList: ['退出登录', '关于我们'],
+      success: function(res) {
+        if (res.tapIndex == 0) {
+          self.exit()         
+        }else if (res.tapIndex == 1) {
+          console.log('关于我们');         
+        }
+      },
+      fail: function(res) {
+        console.log(res.errMsg)
+      }
     })
   },
   exit() {

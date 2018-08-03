@@ -56,10 +56,10 @@ Page({
     ],
     //控制获取商品的参数num,每次触底加载+6,记得返回的时候置0
     num: 0,
-    goods: null,
+    goods: [],
     //搜索的小类id
     typeId: null,
-    token:null,
+    token: null,
   },
 
   /**
@@ -74,12 +74,12 @@ Page({
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       }
-    }   
+    }
     utils.getData(this, service.smallType, 'smTypes', {
       bigTypeId: this.data.searchBigId
-    },header)
+    }, header)
   },
 
   /**
@@ -94,18 +94,21 @@ Page({
    */
   onShow: function () {
     const self = this
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    })
-    let timer = setInterval(()=>{
-      if (app.globalData.isCom) {
-        self.getShoppingCar()
-        wx.hideLoading()
-        app.globalData.isCom = false
-        clearInterval(timer)
-      }
-    },100)
+    if (wx.getStorageSync("token")) {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      let timer = setInterval(() => {
+        if (app.globalData.isCom) {
+          self.getShoppingCar()
+          wx.hideLoading()
+          app.globalData.isCom = false
+          clearInterval(timer)
+        }
+      }, 100)
+    }
+
   },
 
   /**
@@ -113,8 +116,8 @@ Page({
    */
   onHide: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
     }
   },
@@ -124,8 +127,8 @@ Page({
    */
   onUnload: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
     }
   },
@@ -141,49 +144,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let self = this
-    let typeId = this.data.typeId
-    let cityId = app.globalData.cityId
-    let num = this.data.num + 6
-    let header = {};
+    const self = this
     if (wx.getStorageSync('token')) {
-      header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
-      }
-    }   
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
-    wx.request({
-      url: service.selectTypeGoods,
-      data: {
-        num,
-        typeId,
-        cityId
-      },
-      header,
-      success: function (res) {
-        wx.hideLoading()
-        console.log(res.data);
-        if (res.data.length == 0) {
-          wx.showToast({
-            title: '已加载全部',
-            icon: 'none',
-            duration: 2000
-          })
-        } else {
-          self.data.goods = self.data.goods.concat(res.data)
-          self.setData({
-            goods: self.data.goods,
-            num: self.data.num + 6
-          })
-        }
-      },
-      fail: function () {
-        this.fail_cb()
-      }
-    })
+      self.getShoppingCar(self.getGoodsByNum)
+    } else {
+      self.getGoodsByNum()
+    }
   },
 
   /**
@@ -220,7 +186,7 @@ Page({
     })
   },
   changeBigIndex(e) {
-    let i = e.currentTarget.dataset.i  
+    let i = e.currentTarget.dataset.i
     this.setData({
       bigTypeIndex: i,
       searchBigId: this.data.types[i].bigTypeId,
@@ -237,19 +203,19 @@ Page({
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       }
-    }   
+    }
     this.setData({
       typeId: typeId,
-      num:0
+      num: 0
     })
     let cityId = app.globalData.cityId
     utils.getData(this, service.selectTypeGoods, 'goods', {
       typeId,
-      num:0,
+      num: 0,
       cityId
-    },header)
+    }, header)
   },
   return_sm() {
     this.setData({
@@ -265,56 +231,104 @@ Page({
       duration: 2000
     })
   },
-  getShoppingCar(){
+  getShoppingCar(cb) {
     let self = this
     if (wx.getStorageSync('token')) {
       self.setData({
         token: wx.getStorageSync('token')
       })
-      utils.setData(this, service.shoppingCar,{},function (res) {                   
-        app.globalData.shops = res.data  
+      utils.setData(this, service.shoppingCar, {}, function (res) {
+        app.globalData.shops = res.data
         app.globalData.sum = 0
         app.globalData.total = 0
         app.globalData.shops.forEach(item => {
           app.globalData.sum += item.price.price * item.buyNum
           app.globalData.total += item.buyNum
-        });     
-        console.log('获得购物车信息');   
+        });
+        console.log('获得购物车信息');
         self.setData({
           total: app.globalData.total,
-          sum: app.globalData.sum     
+          sum: app.globalData.sum
         })
+        if (cb) {
+          cb()
+        }
       })
-    } 
+    }
   },
-  editShoppingCar(){  
+  editShoppingCar() {
     let self = this
-    app.globalData.shops.forEach((item)=>{
-      if (item.goods) {        
+    app.globalData.shops.forEach((item) => {
+      if (item.goods) {
         item.goodsId = item.goods.id
         item.priceId = item.price.id
         item.buyNum = item.price.buyNum
         if (!item.isCheck) {
           item.isCheck = false
-        }else{
+        } else {
           item.isCheck = true
         }
         delete item.goods
         delete item.id
         delete item.price
       }
-    })      
+    })
     wx.request({
       url: service.updateShoppingCar,
       method: "POST",
       header: {
         'Authorization': 'Bearer ' + self.data.token
       },
-      data:app.globalData.shops,
+      data: app.globalData.shops,
       success: function (res) {
-        console.log('修改购物车');  
-        app.globalData.isCom = true          
+        console.log('修改购物车');
+        app.globalData.isCom = true
       }
-    }) 
+    })
+  },
+  getGoodsByNum() {
+    let self = this
+    let typeId = this.data.typeId
+    let cityId = app.globalData.cityId
+    let num = this.data.num + 6
+    let header = {};
+    if (wx.getStorageSync('token')) {
+      header = {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
+      }
+    }
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    wx.request({
+      url: service.selectTypeGoods,
+      data: {
+        num,
+        typeId,
+        cityId
+      },
+      header,
+      success: function (res) {
+        wx.hideLoading()
+        console.log(res.data);
+        if (res.data.length == 0) {
+          wx.showToast({
+            title: '已加载全部',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          self.data.goods = self.data.goods.concat(res.data)
+          self.setData({
+            goods: self.data.goods,
+            num: self.data.num + 6
+          })
+        }
+      },
+      fail: function () {
+        this.fail_cb()
+      }
+    })
   }
 })

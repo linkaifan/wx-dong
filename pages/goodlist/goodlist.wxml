@@ -4,7 +4,9 @@
     <text class="h50">"{{search}}" 的搜索结果 :</text>
     <view class="line"></view>
   </view>
-  <good wx:for="{{goods}}" good="{{item}}" wx:key="id" bind:updata="updata"></good>
+  <view class="result">
+    <good wx:for="{{goods}}" good="{{item}}" wx:key="id" bind:updata="updata"></good>
+  </view>
   <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
 
 </view>

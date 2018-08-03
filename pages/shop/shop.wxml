@@ -1,4 +1,5 @@
 <!-- pages/shop/shop.wxml -->
+<wxs module="dateSum" src="../../filter/sum.wxs"></wxs>
 <view id="shop">
   <view class="content">
     <view class="box contain" wx:for="{{shops}}" wx:key="id">
@@ -53,7 +54,7 @@
       </checkbox-group>
     </view>
     <view class="bar-right">
-      <view class="bar-t">合计：￥{{sum}}</view>
+      <view class="bar-t">合计：￥{{dateSum.getSum(sum,2)}}</view>
       <view class="bar-btn" catchtap="toSubmit">去结算</view>
     </view>
   </view>

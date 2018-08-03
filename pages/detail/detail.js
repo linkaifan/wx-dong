@@ -42,18 +42,21 @@ Page({
    */
   onShow: function () {
     const self = this
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    })
-    let timer = setInterval(()=>{
-      if (app.globalData.isCom) {
-        self.getShoppingCar()
-        wx.hideLoading()
-        app.globalData.isCom = false
-        clearInterval(timer)       
-      }
-    },100) 
+    if (wx.getStorageSync("token")) {
+      wx.showLoading({
+        title: '加载中',
+        mask:true
+      })
+      let timer = setInterval(()=>{
+        if (app.globalData.isCom) {
+          self.getShoppingCar()
+          wx.hideLoading()
+          app.globalData.isCom = false
+          clearInterval(timer)       
+        }
+      },100)       
+    }
+
   },
 
   /**

@@ -134,3 +134,8 @@ radio .wx-radio-input{
   width: 40rpx;
   height: 40rpx;
 }
+.contact-btn{
+  margin-top: 10rpx;
+  font-size: 10px;
+  color: #0297fe;
+}
