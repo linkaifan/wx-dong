@@ -1,0 +1,8 @@
+var phoneForMata = {
+  hide:function (phone) {
+    return phone.substring(0,3)+"****"+phone.substring(7,10);
+  }
+} 
+module.exports = {
+  hide: phoneForMata.hide
+}

@@ -41,11 +41,7 @@ Component({
       }
       let mode = e.currentTarget.dataset.mode
       let shops = app.globalData.shops
-      let self = this
       let properties = this.properties
-      this.setData({
-        good: this.properties.good
-      })
       //点击事件控制的商品在购物车里的序号
       let indexOfShops = -1;
       if (mode == 1) {

@@ -12,7 +12,6 @@ Page({
     searchBigId: null,
     bigTypeIndex: null,
     smTypes: [],
-    smId: null,
     types: [{
         name: "鸭鸭专区",
         bigTypeId: "5"
@@ -56,7 +55,7 @@ Page({
     ],
     //控制获取商品的参数num,每次触底加载+6,记得返回的时候置0
     num: 0,
-    goods: [],
+    goods: null,
     //搜索的小类id
     typeId: null,
     token: null,
@@ -144,6 +143,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    //通过判断typeId为Null表明不需要触底获取更多商品
+    if (!this.data.typeId) {
+      return
+    }
     const self = this
     if (wx.getStorageSync('token')) {
       self.getShoppingCar(self.getGoodsByNum)
@@ -191,6 +194,7 @@ Page({
       bigTypeIndex: i,
       searchBigId: this.data.types[i].bigTypeId,
       goods: null,
+      typeId: null,
       num: 0
     })
     utils.getData(this, service.smallType, 'smTypes', {
@@ -220,6 +224,7 @@ Page({
   return_sm() {
     this.setData({
       goods: null,
+      typeId: null,
       num: 0
     })
   },

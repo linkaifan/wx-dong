@@ -1,4 +1,5 @@
 <!-- pages/detail/detail.wxml -->
+<wxs module="forMataPhone" src="../../filter/phone.wxs"></wxs>
 <view id="detail">
   <swiper indicator-dots="{{true}}" autoplay="{{true}}" class="detail-swiper">
     <block wx:for="{{good.pictures}}" wx:key="id">
@@ -34,7 +35,7 @@
     <view class="title t-bold">评价 ({{evaluations.length || 0}})</view>
     <view class="contain">
       <view wx:for="{{evaluations}}" wx:key="id">
-        <view class="user">用户：{{item.user.account}}</view>
+        <view class="user">用户：{{forMataPhone.hide(item.user.account)}}</view>
         <view class="comment">{{item.star}}星好评： {{item.comment}}</view>
         <view class="line"></view>
       </view>
