@@ -2,8 +2,8 @@
 <view id="home">
   <view class="weui-search-bar df">
     <picker bindchange="bindPickerChange" value="{{index}}" range-key="{{'city'}}" 
-    range="{{citys}}" class="address">
-      <view>{{city}}</view>
+    range="{{citys}}">
+      <view  class="address">{{city}} </view>
     </picker>
     <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">

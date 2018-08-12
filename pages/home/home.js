@@ -184,7 +184,10 @@ Page({
       cityId:this.data.citys[i].id
     })
     wx.setStorageSync('cityId', this.data.cityId)
-    app.globalData.cityId = this.data.cityId    
+    app.globalData.cityId = this.data.cityId   
+    wx.reLaunch({
+      url: 'home'
+    }) 
   },
   search(){
     wx.navigateTo({

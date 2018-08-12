@@ -12,7 +12,8 @@ Page({
     sum: 0,
     total: 0,
     goods: [],
-    token: null
+    token: null,
+    search: null
   },
 
   /**
@@ -22,17 +23,6 @@ Page({
     this.setData({
       search: options.search
     })
-    //获取搜索内容的商品列表
-    let header = {};
-    if (wx.getStorageSync('token')) {
-      header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token')
-      }
-    }
-    utils.getData(this, service.selectGoods, 'goods', {
-      message: options.search,
-      cityId: app.globalData.cityId,
-    }, header)
   },
 
   /**
@@ -50,16 +40,27 @@ Page({
     if (wx.getStorageSync("token")) {
       wx.showLoading({
         title: '加载中',
-        mask:true
+        mask: true
       })
-      let timer = setInterval(()=>{
+      let timer = setInterval(() => {
         if (app.globalData.isCom) {
+          //获取搜索内容的商品列表
+          let header = {};
+          if (wx.getStorageSync('token')) {
+            header = {
+              'Authorization': 'Bearer ' + wx.getStorageSync('token')
+            }
+          }
+          utils.getData(self, service.selectGoods, 'goods', {
+            message: self.data.search,
+            cityId: app.globalData.cityId,
+          }, header)
           self.getShoppingCar()
           wx.hideLoading()
           app.globalData.isCom = false
-          clearInterval(timer)       
+          clearInterval(timer)
         }
-      },100)       
+      }, 100)
     }
   },
   /**

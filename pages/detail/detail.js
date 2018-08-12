@@ -12,22 +12,17 @@ Page({
     total: 0,
     good: null,
     token:null,
-    evaluations:[]
+    evaluations:[],
+    goodsId:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let goodsId = options.goodsId
-    let header = {};
-    if (wx.getStorageSync('token')) {
-      header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') 
-      }
-    } 
-    utils.getData(this, service.selectOneGoods, 'good', {goodsId},header)
-    utils.getData(this, service.selectCommentByGoodsId, 'evaluations', {goodsId},header)
+    this.setData({
+      goodsId: options.goodsId
+    })
   },
 
   /**
@@ -42,6 +37,7 @@ Page({
    */
   onShow: function () {
     const self = this
+    let goodsId = this.data.goodsId
     if (wx.getStorageSync("token")) {
       wx.showLoading({
         title: '加载中',
@@ -50,6 +46,14 @@ Page({
       let timer = setInterval(()=>{
         if (app.globalData.isCom) {
           self.getShoppingCar()
+          let header = {};
+          if (wx.getStorageSync('token')) {
+            header = {
+              'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+            }
+          } 
+          utils.getData(self, service.selectOneGoods, 'good', {goodsId},header)
+          utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {goodsId},header)
           wx.hideLoading()
           app.globalData.isCom = false
           clearInterval(timer)       

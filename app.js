@@ -25,9 +25,7 @@ App({
       })
     }
     //wx登录
-    if(!wx.getStorageSync('token')){
-      this.getOpenId()
-    }
+    this.getOpenId()
   },
   getOpenId(){
     wx.login({
@@ -46,6 +44,7 @@ App({
             },
             success: (res) => {              
               if (res.statusCode == 200) {
+                console.log('获取openid');               
                 wx.setStorageSync('openid', res.data.openid)              
               }else{
                 wx.showToast({

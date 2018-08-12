@@ -3,7 +3,7 @@
  */
 const app = getApp()
 // 此处主机域名
-var host = 'https://www.guohanghuang.cn:8443';
+var host = 'https://www.dongpinhui.xyz:8443';
 
 var config = {
 
@@ -47,6 +47,9 @@ var config = {
 		//商品评价
 		createComment: host + '/createComment',
 		selectCommentByGoodsId: host + '/selectCommentByGoodsId',
+		//支付
+		wxPay: host + '/wxPay',
+		wxRefund: host + '/wxRefund',
 	},
 	utils: {
 		getData: function (self, url, setData, data, header, succ_cb) {

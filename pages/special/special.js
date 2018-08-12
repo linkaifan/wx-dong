@@ -50,18 +50,6 @@ Page({
     let state = this.data.state
     let num = this.data.num
     let cityId = app.globalData.cityId
-    //获取商品goods
-    let header = {};
-    if (wx.getStorageSync('token')) {
-      header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token')
-      }
-    }
-    utils.getData(this, service.selectStateGoods, 'goods', {
-      state,
-      num,
-      cityId
-    }, header)
     //购物车
     const self = this
     if (wx.getStorageSync("token")) {
@@ -71,6 +59,18 @@ Page({
       })
       let timer = setInterval(() => {
         if (app.globalData.isCom) {
+          //获取商品goods
+          let header = {};
+          if (wx.getStorageSync('token')) {
+            header = {
+              'Authorization': 'Bearer ' + wx.getStorageSync('token')
+            }
+          }
+          utils.getData(self, service.selectStateGoods, 'goods', {
+            state,
+            num,
+            cityId
+          }, header)
           self.getShoppingCar()
           wx.hideLoading()
           app.globalData.isCom = false

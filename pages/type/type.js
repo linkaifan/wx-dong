@@ -100,6 +100,9 @@ Page({
       })
       let timer = setInterval(() => {
         if (app.globalData.isCom) {
+          if (self.data.typeId) {
+            self.getGoods(self.data.typeId)        
+          }
           self.getShoppingCar()
           wx.hideLoading()
           app.globalData.isCom = false
@@ -201,9 +204,11 @@ Page({
       bigTypeId: this.data.searchBigId
     })
   },
-  getGoods(e) {
-    let self = this
+  tapSmtype(e){
     let typeId = e.currentTarget.dataset.type_id
+    this.getGoods(typeId)
+  },
+  getGoods(typeId) {
     let header = {};
     if (wx.getStorageSync('token')) {
       header = {
