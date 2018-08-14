@@ -168,7 +168,6 @@ Page({
     })
   },
   complete() {
-    let self = this
     let detail = this.data.detail
     wx.showLoading({
       title:"保存中",
@@ -181,6 +180,10 @@ Page({
         userPhone: detail.userPhone,
         address: detail.address,
         addressId: detail.id
+      }
+      //判断地址填写是否正确
+      if (!this.IsAddressPass(info)) {
+        return 
       }
       utils.setData(this, service.updateAddress, info, function (res) {
         wx.hideLoading()
@@ -205,6 +208,10 @@ Page({
         userName: detail.userName,
         userPhone: detail.userPhone,
         address: detail.address,
+      }
+      //判断地址填写是否正确
+      if (!this.IsAddressPass(info)) {
+        return 
       }
       utils.setData(this, service.insertAddress, info, function (res) {
         wx.hideLoading()
@@ -324,5 +331,40 @@ Page({
       icon: 'none',
       duration: 2000
     })
+  },
+  isphone(v) {
+    let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+    if (!phoneReg.test(v)) {
+      wx.showToast({
+        title: '请输入有效的手机号码！',
+        icon: 'none',
+        duration: 2000,
+        mask:true
+      })
+      return false
+    }
+    return true
+  },
+  //地址填写是否正确，判空和手机号验证，参数object,key：userName,userPhone,address
+  IsAddressPass(v){
+    for (let key in v){
+      if (!v[key]) {
+        wx.showToast({
+          title: '请完善信息',
+          icon: 'none',
+          duration: 1000,
+        })
+        return false
+      }
+    }
+    if (!this.isphone(v.userPhone)) {
+      wx.showToast({
+        title: '请填写11位手机号码',
+        icon: 'none',
+        duration: 1000,
+      })
+      return false
+    }
+    return true
   }
 })

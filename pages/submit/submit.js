@@ -158,10 +158,20 @@ Page({
       },
       data,
       success: function (res) {
+        console.log(res.statusCode);
         wx.hideLoading()
+        if (res.statusCode == 400) {
+          wx.showToast({
+            title: '收货地址与下单城市不一致，请切换配送地址',
+            icon: 'none',
+            duration: 1500,
+            wrap: true
+          }) 
+          return               
+        }
         wx.showToast({
           title: '提交订单成功',
-          icon: 'none',
+          icon: 'success',
           duration: 1500,
           wrap: true
         })
