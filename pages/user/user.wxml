@@ -16,13 +16,13 @@
       <view class="forget-t t-blue h50" catchtap="changeCurTab" data-to="forget">忘记密码</view>
       <view class="log-btn1" catchtap="login">登 录</view>
       <view class="log-btn2" catchtap="changeCurTab">注册账号</view>
-      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+      <view class="t-gray h50" style="text-align: center">{{kefu}}</view>
     </view>
   </view>
   <view class="register" hidden="{{curTab != 'register'}}">
     <view class="img-box">
       <image src="../../assets/me/head.png" class="reg-img" />
-      <view>冻品汇 欢迎您</view>
+      <view>淘冻品 欢迎您</view>
     </view>
     <view class="reg-form contain">
       <view class="inp-box df">
@@ -82,7 +82,7 @@
       <view class="blue-line"></view>
       <view class="log-btn1" catchtap="compareCode">验 证</view>
       <view class="log-btn2" catchtap="changeCurTab">取 消</view>
-      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+      <view class="t-gray h50" style="text-align: center">{{kefu}}</view>
     </view>
     <view class="for-form" hidden="{{forgetTab != 2}}">
       <view class="inp-box df">
@@ -97,7 +97,7 @@
       <view class="blue-line"></view>
       <view class="log-btn1" catchtap="reset">密码重置</view>
       <view class="log-btn2" catchtap="changeCurTab">取 消</view>
-      <view class="t-gray h50" style="text-align: center">客服热线：0890-xxxxxxx</view>
+      <view class="t-gray h50" style="text-align: center">{{kefu}}</view>
     </view>
   </view>
 </view>

@@ -17,47 +17,47 @@ Page({
     city:'城市',
     types: [{
         src: "../../assets/home/z1.png",
-        name: "鸭鸭专区",
-        bigTypeId: "96575ad0964442299e734ae0eebf0b6f"
+        name: "鸭副类",
+        bigTypeId: "2"
       },
       {
         src: "../../assets/home/z2.png",
-        name: "鸡鸽专区",
-        bigTypeId: "b9cbb018133d47cb8432974e5d8c9e23"
+        name: "鸡副类",
+        bigTypeId: "3"
       },
       {
         src: "../../assets/home/z3.png",
-        name: "猪肉专区",
-        bigTypeId: "9c90287f50604d74bab7096a97194358"
+        name: "猪副类",
+        bigTypeId: "5"
       },
       {
         src: "../../assets/home/z4.png",
-        name: "牛肉专区",
-        bigTypeId: "c9990b746cb146ff8bb5cd635aec7b09"
+        name: "牛副类",
+        bigTypeId: "6"
       }, {
         src: "../../assets/home/z5.png",
-        name: "羊兔专区",
-        bigTypeId: "1b5989d034fa47649f4a512424a03934"
+        name: "羊兔类",
+        bigTypeId: "7"
       }, {
         src: "../../assets/home/z6.png",
-        name: "水产专区",
-        bigTypeId: "37de999fe2a34bb586be0feb69b48b6a"
+        name: "水产类",
+        bigTypeId: "8"
       }, {
         src: "../../assets/home/z7.png",
-        name: "火锅专区",
-        bigTypeId: "e5bc824c05f44e138e00b6d880aae247"
+        name: "火锅类",
+        bigTypeId: "9"
       }, {
         src: "../../assets/home/z8.png",
-        name: "米面果蔬",
-        bigTypeId: "e8053a9b974f4ee7842b6f29fc3b4933"
+        name: "粮油类",
+        bigTypeId: "12"
       }, {
         src: "../../assets/home/z9.png",
-        name: "调理串类",
-        bigTypeId: "564396ba362b4726a997886dc3b1224f"
+        name: "烧烤串类",
+        bigTypeId: "11"
       }, {
         src: "../../assets/home/z10.png",
-        name: "烟熏专区",
-        bigTypeId: "d118f084725a4203bf4ebb1618e9e966"
+        name: "调料类",
+        bigTypeId: "15"
       }
     ],
     discounts:[],
@@ -86,7 +86,7 @@ Page({
     let cityId = this.data.cityId
     app.globalData.cityId = cityId 
     //获取banners,citys,推荐区recommendations,促销区discounts
-    utils.getData(this,service.getBannerPicture,'banners')
+    utils.getData(this,service.getBannerPicture,'banners',{cityId})
     utils.getData(this,service.getCity,'citys',{},{},function () {
       self.data.citys.forEach(arr => {
         if (arr.id == self.data.cityId) {
@@ -97,10 +97,10 @@ Page({
       });
     })
     utils.getData(this,service.selectStateGoods,'discounts',{
-      cityId,state:2,num:0
+      cityId,state:3,num:0
     })
     utils.getData(this,service.selectStateGoods,'recommendations',{
-      cityId,state:3,num:0
+      cityId,state:2 ,num:0
     })
        
   },
@@ -115,8 +115,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow: function () { 
   },
 
   /**
@@ -196,8 +195,9 @@ Page({
   },
   toType(e){
     let i = e.currentTarget.dataset.i
+    let bigTypeId = this.data.types[i].bigTypeId
     wx.navigateTo({
-      url: '../type/type?bigTypeIndex='+i
+      url: '../type/type?bigTypeId='+bigTypeId
     })   
   },
   more(e){

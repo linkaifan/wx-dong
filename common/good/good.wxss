@@ -17,6 +17,9 @@
 .t-blue{
   color:#0297fe;
 }
+.t-left{
+  text-align: left;
+}
 .t-gray{
   color: #808080;
 }
@@ -36,4 +39,7 @@
   height: 50rpx;
   line-height: 50rpx;
   display: block;
+}
+.t-nowrap{
+  white-space:nowrap;
 }

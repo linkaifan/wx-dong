@@ -16,7 +16,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#0297fe",
-    "navigationBarTitleText": "冻品会",
+    "navigationBarTitleText": "淘冻品",
     "navigationBarTextStyle": "white"
   },
   "networkTimeout": {

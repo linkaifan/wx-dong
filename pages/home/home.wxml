@@ -62,7 +62,7 @@
     <view class="home-line"></view>
     <view class="recommendation">
       <view class="R-title">
-        <view>精品推荐</view>
+        <view>新品推荐</view>
         <view class="t-more t-gray" catchtap="more" data-state="2">
           查看更多
           <image src="../../assets/right.png" class="sm-icon" />

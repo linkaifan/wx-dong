@@ -3,17 +3,20 @@
     <view class="box">
     <view class="df">
       <image src="{{good.pictures[0]}}" class="box-img"  catchtap="toDetail"/>
-      <view>
+      <view class="t-left">
         <text class="t-bold h50">{{good.name}}</text>
-        <text class="h50">{{good.price[0].weight}}</text>
-        <text class="t-red h50">￥ {{good.price[0].price}}</text>
+        <text class="t-bold h50"></text>
+        <text class="t-bold h50"></text>
       </view>
     </view>
     <view wx:for="{{good.price}}" wx:key="{{index}}">
       <view>
         <text class="h50">{{item.value}}</text>
         <view class="df-sb">
-          <text class="h50 t-red">￥ {{item.price}}</text>
+          <view class="t-left">
+            <text class="h50">{{item.weight}}</text>
+            <text class="h50 t-red"> ￥{{item.price}}/{{item.unit}}</text>
+          </view>        
           <nbtn good="{{item}}" goodid="{{good.id}}" bind:updata="updata"></nbtn>
         </view>
       </view>

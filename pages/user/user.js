@@ -28,11 +28,14 @@ Page({
       password2: 0
     },
     //注册验证码
+    failTime: 300,
     reg_code: 0,
     reg_time: 0,
     //找回密码验证码
     for_code: 0,
     for_time: 0,
+    //客服
+    kefu: "客服热线：0898-25567278"
   },
 
   /**
@@ -106,10 +109,19 @@ Page({
     }
   },
   login() {
+    let login = this.data.login
+    //判空
+    if (!login.account || !login.password) {
+      wx.showToast({
+        title: '请输入相关信息',
+        icon: 'none',
+        duration: 1500
+      })
+      return
+    }
     wx.showLoading({
       title: '登录中',
     })
-    let login = this.data.login
     wx.request({
       url: config.login,
       method: "POST",
@@ -138,7 +150,7 @@ Page({
         } else {
           wx.showToast({
             title: '账号或密码错误',
-            duration: 3000,
+            duration: 2000,
             icon: 'none',
             mask:true
           })
@@ -157,11 +169,11 @@ Page({
     let setCode, setTime
     if (e.currentTarget.dataset.mode == 'register') {
       setCode = 'reg_code',
-        setTime = 'reg_time'
+      setTime = 'reg_time'
 
     } else if (e.currentTarget.dataset.mode == 'forget') {
       setCode = 'for_code',
-        setTime = 'for_time'
+      setTime = 'for_time'
     }
     //手机号码格式判断
     if (!this.isphone(mode.phone)) {
@@ -184,7 +196,7 @@ Page({
         console.log(res.data)
         self.setData({
           [setCode]: res.data,
-          [setTime]: 300,
+          [setTime]: self.data.failTime,
         })
         let timer = setInterval(function () {
           if (!self.data[setTime]) {
@@ -208,8 +220,18 @@ Page({
   },
   register() {
     let register = this.data.register
+    //判断验证码是否存在
+    if (!this.data.reg_code) {
+      wx.showToast({
+        title: '验证码出错，请点击获取',
+        icon: 'none',
+        duration: 2000,
+        mask:true
+      })
+      return;      
+    }
     //判断各值是否存在
-    if (!register.contact || !register.password || !this.data.reg_code) {
+    if (!register.contact || !register.password) {
       wx.showToast({
         title: '请输入相关信息',
         icon: 'none',
@@ -281,15 +303,22 @@ Page({
       fail: function() {
         this.fail_cb()
       }
-    })
-
-    //重载user页   
+    })   
   },
   compareCode() {
     let forget = this.data.forget
-    if (!this.data.for_code ||forget.code != this.data.for_code) {
+    if (!this.data.for_code ) {
       wx.showToast({
-        title: '请填写正确的验证码',
+        title: '验证码出错，请点击获取',
+        icon: 'none',
+        duration: 2000,
+        mask:true
+      })
+      return      
+    }
+    if ( forget.code != this.data.for_code) {
+      wx.showToast({
+        title: '验证码错误',
         icon: 'none',
         duration: 2000,
         mask:true

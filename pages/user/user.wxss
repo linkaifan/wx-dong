@@ -47,8 +47,10 @@
   font-size: 14px;
 }
 .test-img{
-  width: 100vw;
-  height: 400rpx;
+  display: block;
+  margin: 50rpx auto;
+  width: 50vw;
+  height: 300rpx;
 }
 .log-btn1{
   margin-top: 60rpx;

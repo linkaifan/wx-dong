@@ -1,7 +1,6 @@
 /**
  * 小程序配置文件
  */
-const app = getApp()
 // 此处主机域名
 var host = 'https://www.dongpinhui.xyz:8443';
 
@@ -52,7 +51,7 @@ var config = {
 		wxRefund: host + '/wxRefund',
 	},
 	utils: {
-		getData: function (self, url, setData, data, header, succ_cb) {
+		getData: function (self, url, setData, data, header, succ_cb) {	
 			wx.request({
 				url: url,
 				method: "GET",
@@ -86,9 +85,9 @@ var config = {
 				success: function (res) {
 					succ_cb(res)
 				},
-				fail: function (res) {
+				fail: function (err) {
 					if (fail_cb) {
-						fail_cb(res)
+						fail_cb(err)
 					}					
 				}
 			})

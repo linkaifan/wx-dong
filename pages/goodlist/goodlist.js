@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    search: "六和 鸡腿",
+    search: "",
     sum: 0,
     total: 0,
     goods: [],
@@ -61,6 +61,11 @@ Page({
           clearInterval(timer)
         }
       }, 100)
+    }else{
+      utils.getData(self, service.selectGoods, 'goods', {
+        message: self.data.search,
+        cityId: app.globalData.cityId,
+      })
     }
   },
   /**
@@ -129,6 +134,14 @@ Page({
         self.setData({
           total: app.globalData.total,
           sum: app.globalData.sum
+        })
+      },function (err) {
+        console.log(err);
+        wx.showToast({
+          title:"发生错误",
+          icon:"none",
+          duration:1500,
+          mask:true
         })
       })
     }

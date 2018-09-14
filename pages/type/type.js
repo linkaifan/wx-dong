@@ -13,44 +13,76 @@ Page({
     bigTypeIndex: null,
     smTypes: [],
     types: [{
-        name: "鸭鸭专区",
+        name: "产品品牌",
+        bigTypeId: "1"
+      },
+      {
+        name: "鸭副类",
+        bigTypeId: "2"
+      },
+      {
+        name: "鸡副类",
+        bigTypeId: "3"
+      },
+      {
+        name: "鹅鸽类",
+        bigTypeId: "4"
+      },
+      {
+        name: "猪副类",
         bigTypeId: "5"
       },
       {
-        name: "鸡鸽专区",
-        bigTypeId: "7"
-      },
-      {
-        name: "猪肉专区",
+        name: "牛副类",
         bigTypeId: "6"
       },
       {
-        name: "牛肉专区",
+        name: "羊兔类",
+        bigTypeId: "7"
+      },
+      {
+        name: "水产类",
         bigTypeId: "8"
-      }, {
-        name: "羊兔专区",
-        bigTypeId: "1"
-      }, {
-        name: "水产专区",
-        bigTypeId: "2"
-      }, {
-        name: "火锅专区",
-        bigTypeId: "10"
-      }, {
-        name: "米面果蔬",
-        bigTypeId: "11"
-      }, {
-        name: "调理串类",
-        bigTypeId: "3"
-      }, {
-        name: "烟熏专区",
+      },
+      {
+        name: "火锅类",
         bigTypeId: "9"
-      }, {
-        name: "菜系专区",
+      },
+      {
+        name: "面点类",
+        bigTypeId: "10"
+      },
+      {
+        name: "烧烤串类",
+        bigTypeId: "11"
+      },
+      {
+        name: "粮油类",
         bigTypeId: "12"
-      }, {
-        name: "品牌专区",
-        bigTypeId: "4"
+      },
+      {
+        name: "水果类",
+        bigTypeId: "13"
+      },
+      {
+        name: "蔬菜类",
+        bigTypeId: "14"
+      },
+      {
+        name: "调料类",
+        bigTypeId: "15"
+      },
+      {
+        name: "干货类",
+        bigTypeId: "18"
+      },
+      {
+        name: "腌熏类",
+        bigTypeId: "16"
+      },
+      {
+        name: "小吃类",
+        bigTypeId: "17"
       }
     ],
     //控制获取商品的参数num,每次触底加载+6,记得返回的时候置0
@@ -65,9 +97,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let i = options.bigTypeIndex
+    let bigTypeId = options.bigTypeId
+    let i = this.data.types.findIndex((item) => {
+      return bigTypeId === item.bigTypeId
+    })
     this.setData({
-      searchBigId: this.data.types[i].bigTypeId,
+      searchBigId: bigTypeId,
       bigTypeIndex: i,
     })
     let header = {};
@@ -101,7 +136,7 @@ Page({
       let timer = setInterval(() => {
         if (app.globalData.isCom) {
           if (self.data.typeId) {
-            self.getGoods(self.data.typeId)        
+            self.getGoods(self.data.typeId)
           }
           self.getShoppingCar()
           wx.hideLoading()
@@ -204,7 +239,7 @@ Page({
       bigTypeId: this.data.searchBigId
     })
   },
-  tapSmtype(e){
+  tapSmtype(e) {
     let typeId = e.currentTarget.dataset.type_id
     this.getGoods(typeId)
   },

@@ -11,9 +11,9 @@ Page({
     sum: 0,
     total: 0,
     good: null,
-    token:null,
-    evaluations:[],
-    goodsId:null
+    token: null,
+    evaluations: [],
+    goodsId: null
   },
 
   /**
@@ -41,24 +41,35 @@ Page({
     if (wx.getStorageSync("token")) {
       wx.showLoading({
         title: '加载中',
-        mask:true
+        mask: true
       })
-      let timer = setInterval(()=>{
+      let timer = setInterval(() => {
         if (app.globalData.isCom) {
           self.getShoppingCar()
           let header = {};
           if (wx.getStorageSync('token')) {
             header = {
-              'Authorization': 'Bearer ' + wx.getStorageSync('token') 
+              'Authorization': 'Bearer ' + wx.getStorageSync('token')
             }
-          } 
-          utils.getData(self, service.selectOneGoods, 'good', {goodsId},header)
-          utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {goodsId},header)
+          }
+          utils.getData(self, service.selectOneGoods, 'good', {
+            goodsId
+          }, header)
+          utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {
+            goodsId
+          }, header)
           wx.hideLoading()
           app.globalData.isCom = false
-          clearInterval(timer)       
+          clearInterval(timer)
         }
-      },100)       
+      }, 100)
+    } else {
+      utils.getData(self, service.selectOneGoods, 'good', {
+        goodsId
+      })
+      utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {
+        goodsId
+      })
     }
 
   },
@@ -68,8 +79,8 @@ Page({
    */
   onHide: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
     }
   },
@@ -79,8 +90,8 @@ Page({
    */
   onUnload: function () {
     if (!wx.getStorageSync('token')) {
-      return 
-    }else{
+      return
+    } else {
       this.editShoppingCar()
     }
   },
@@ -105,62 +116,78 @@ Page({
   onShareAppMessage: function () {
 
   },
-  updata(){    
+  updata() {
     this.setData({
       total: app.globalData.total,
       sum: app.globalData.sum,
     })
   },
-  getShoppingCar(){
+  getShoppingCar() {
     let self = this
     if (wx.getStorageSync('token')) {
       self.setData({
         token: wx.getStorageSync('token')
       })
-      utils.setData(this, service.shoppingCar,{},function (res) {                   
-        app.globalData.shops = res.data  
+      utils.setData(this, service.shoppingCar, {}, function (res) {
+        app.globalData.shops = res.data
         app.globalData.sum = 0
         app.globalData.total = 0
         app.globalData.shops.forEach(item => {
           app.globalData.sum += item.price.price * item.buyNum
           app.globalData.total += item.buyNum
-        });     
-        console.log('获得购物车信息');   
+        });
+        console.log('获得购物车信息');
         self.setData({
           total: app.globalData.total,
-          sum: app.globalData.sum     
+          sum: app.globalData.sum
+        })
+      }, function (err) {
+        console.log(err);
+        wx.showToast({
+          title: "发生错误",
+          icon: "none",
+          duration: 1500,
+          mask: true
         })
       })
-    } 
+    }
   },
-  editShoppingCar(){  
+  editShoppingCar() {
     let self = this
-    app.globalData.shops.forEach((item)=>{
-      if (item.goods) {        
+    app.globalData.shops.forEach((item) => {
+      if (item.goods) {
         item.goodsId = item.goods.id
         item.priceId = item.price.id
         item.buyNum = item.price.buyNum
         if (!item.isCheck) {
           item.isCheck = false
-        }else{
+        } else {
           item.isCheck = true
         }
         delete item.goods
         delete item.id
         delete item.price
       }
-    })      
+    })
     wx.request({
       url: service.updateShoppingCar,
       method: "POST",
       header: {
         'Authorization': 'Bearer ' + self.data.token
       },
-      data:app.globalData.shops,
+      data: app.globalData.shops,
       success: function (res) {
-        console.log('修改购物车');  
+        console.log('修改购物车');
         app.globalData.isCom = true
       }
-    }) 
+    })
+  },
+  preImg(e){
+    const urls = this.data.good.pictures
+    const current = urls[e.currentTarget.dataset.i]      
+    wx.previewImage({
+      current, // 当前显示图片的http链接
+      urls,// 需要预览的图片http链接列表
+    })
   }
 })

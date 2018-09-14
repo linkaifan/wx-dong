@@ -7,14 +7,14 @@ App({
     //账号登录
     if (wx.getStorageSync('token')) {
       //判断是否登录，登录了就获取购物车信息
-      self.globalData.token = wx.getStorageSync('token')
+      self.globalData.token = wx.getStorageSync('token')   
       wx.request({
         url: service.shoppingCar,
         method: "GET",
         header: {
           'Authorization': 'Bearer ' + wx.getStorageSync('token')
         },
-        success: function (res) {
+        success: function (res) {          
           self.globalData.shops = res.data
           self.globalData.shops.forEach(item => {
             self.globalData.sum += item.price.price * item.buyNum

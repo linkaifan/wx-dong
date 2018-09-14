@@ -77,6 +77,12 @@ Page({
           clearInterval(timer)
         }
       }, 100)
+    }else{
+      utils.getData(self, service.selectStateGoods, 'goods', {
+        state,
+        num,
+        cityId
+      })
     }
   },
 
