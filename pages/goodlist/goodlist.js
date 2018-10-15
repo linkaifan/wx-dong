@@ -2,6 +2,10 @@
 const app = getApp()
 const service = require('../config.js').service
 const utils = require('../config.js').utils
+import regeneratorRuntime, {
+  async
+} from '../apis/regenerator-runtime'
+const Goodlist = require('../apis/Goodlist')
 Page({
 
   /**
@@ -45,27 +49,29 @@ Page({
       let timer = setInterval(() => {
         if (app.globalData.isCom) {
           //获取搜索内容的商品列表
-          let header = {};
-          if (wx.getStorageSync('token')) {
-            header = {
-              'Authorization': 'Bearer ' + wx.getStorageSync('token')
-            }
-          }
-          utils.getData(self, service.selectGoods, 'goods', {
-            message: self.data.search,
-            cityId: app.globalData.cityId,
-          }, header)
+          !(async () => {
+            const goods = await Goodlist.getSearchGoods(self.data.search)
+            console.log(goods);
+
+            self.setData({
+              goods,
+            })
+          })()
           self.getShoppingCar()
           wx.hideLoading()
           app.globalData.isCom = false
           clearInterval(timer)
         }
       }, 100)
-    }else{
-      utils.getData(self, service.selectGoods, 'goods', {
-        message: self.data.search,
-        cityId: app.globalData.cityId,
-      })
+    } else {
+      //获取搜索内容的商品列表
+      !(async () => {
+        const goods = await Goodlist.getSearchGoods(self.data.search)
+        console.log(goods);
+        self.setData({
+          goods,
+        })
+      })()
     }
   },
   /**
@@ -135,13 +141,13 @@ Page({
           total: app.globalData.total,
           sum: app.globalData.sum
         })
-      },function (err) {
+      }, function (err) {
         console.log(err);
         wx.showToast({
-          title:"发生错误",
-          icon:"none",
-          duration:1500,
-          mask:true
+          title: "发生错误",
+          icon: "none",
+          duration: 1500,
+          mask: true
         })
       })
     }

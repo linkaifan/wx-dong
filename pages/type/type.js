@@ -254,7 +254,7 @@ Page({
       typeId: typeId,
       num: 0
     })
-    let cityId = app.globalData.cityId
+    let cityId = wx.getStorageSync('cityId') 
     utils.getData(this, service.selectTypeGoods, 'goods', {
       typeId,
       num: 0,

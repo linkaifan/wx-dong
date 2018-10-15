@@ -4,8 +4,9 @@
     <image src="../../assets/me/head.png" class="head-img" />
     <view class="head-t">
       <view>用户：{{phone}}</view>
+      <button  class='contact-btn' size="mini" catchtap="alertPhone">客服热线</button> 
       <button open-type="contact" class='contact-btn' size="mini"
-      send-message-title="微信客服">联系客服</button>
+      send-message-title="微信客服">微信客服</button>          
     </view>
     <image src="../../assets/me/setting.png" class="head-icon" catchtap="setting"/>
   </view>

@@ -366,5 +366,24 @@ Page({
       return false
     }
     return true
+  },
+  alertPhone(){
+    wx.showModal({
+      title: "客服热线",
+      content: "0898-25567278",
+      showCancel: true,
+      confirmText: "拨打",
+      success: function(res) {
+        if (res.confirm) {
+          wx.makePhoneCall({
+            phoneNumber: '0898-25567278',
+            fail: function() {
+              console.log("拨打电话失败")
+            }
+          })
+        }
+        
+      }
+    })
   }
 })

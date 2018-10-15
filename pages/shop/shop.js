@@ -56,6 +56,7 @@ Page({
       let timer = setInterval(()=>{
         if (app.globalData.isCom) {
           self.getShoppingCar()
+          self.isCheckAll()
           wx.hideLoading()
           app.globalData.isCom = false
           clearInterval(timer)      
@@ -109,6 +110,10 @@ Page({
   checkboxChange: function (e) {    
     let i = e.currentTarget.dataset.i      
     app.globalData.shops[i].isCheck = !app.globalData.shops[i].isCheck
+    this.isCheckAll()
+    this.updata()
+  },
+  isCheckAll(){
     //判断是否全选中了
     this.setData({
       isCheckAll: true,
@@ -121,7 +126,6 @@ Page({
         })
       }
     }) 
-    this.updata()
   },
   checkAll(e){
     let isCheckAll = this.data.isCheckAll       
@@ -244,6 +248,14 @@ Page({
     let i = e.currentTarget.dataset.i   
     if (mode == 1) {
       //加1
+      if (app.globalData.shops[i].price.num < app.globalData.shops[i].price.buyNum + 1) {
+        wx.showToast({
+          title: '抱歉，库存不足',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      } 
       app.globalData.shops[i].price.buyNum++
       app.globalDatatotal++
       app.globalData.sum += app.globalData.shops[i].price.price

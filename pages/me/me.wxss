@@ -138,4 +138,6 @@ radio .wx-radio-input{
   margin-top: 10rpx;
   font-size: 10px;
   color: #0297fe;
+  display: inline-block;
+  margin-right: 50rpx;
 }

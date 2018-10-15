@@ -1,9 +1,9 @@
 /* pages/detail/detail.wxss */
 #detail{
-  font-size: 12px;
+  font-size: 14px;
 }
 .detail-swiper,.detail-img{
-  height: 80vw;
+  height: 100vw;
   width: 100vw;
 }
 .edit-btn{
@@ -17,7 +17,6 @@
 .title{
   background-color: #f4f4f4;
   padding-left: 40rpx;
-  font-size: 13px;
   height: 60rpx;
   line-height: 60rpx;
 }

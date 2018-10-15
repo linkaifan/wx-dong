@@ -2,6 +2,8 @@
 const app = getApp()
 const service = require('../config.js').service
 const utils = require('../config.js').utils
+import regeneratorRuntime, { async } from '../apis/regenerator-runtime' 
+const Detail = require('../apis/Detail')
 Page({
 
   /**
@@ -37,40 +39,29 @@ Page({
    */
   onShow: function () {
     const self = this
-    let goodsId = this.data.goodsId
-    if (wx.getStorageSync("token")) {
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-      })
-      let timer = setInterval(() => {
-        if (app.globalData.isCom) {
-          self.getShoppingCar()
-          let header = {};
-          if (wx.getStorageSync('token')) {
-            header = {
-              'Authorization': 'Bearer ' + wx.getStorageSync('token')
-            }
-          }
-          utils.getData(self, service.selectOneGoods, 'good', {
-            goodsId
-          }, header)
-          utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {
-            goodsId
-          }, header)
-          wx.hideLoading()
-          app.globalData.isCom = false
-          clearInterval(timer)
-        }
-      }, 100)
-    } else {
-      utils.getData(self, service.selectOneGoods, 'good', {
-        goodsId
-      })
-      utils.getData(self, service.selectCommentByGoodsId, 'evaluations', {
-        goodsId
-      })
-    }
+    const goodsId = this.data.goodsId
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    let timer = setInterval(() => {
+      if (app.globalData.isCom) {
+        self.getShoppingCar()
+        !(async ()=>{
+          const [good,evaluations] = await Promise.all(
+            [Detail.getOneGood(goodsId),
+            Detail.getComments(goodsId)])
+          self.setData({
+            good,
+            evaluations
+          })
+        })()
+        wx.hideLoading()
+        app.globalData.isCom = false
+        clearInterval(timer)
+      }
+    }, 100)
+    
 
   },
 

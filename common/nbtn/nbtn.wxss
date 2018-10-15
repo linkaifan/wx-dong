@@ -1,12 +1,23 @@
 /* common/nbtn/nbtn.wxss */
 .btn-box{
   display: flex;
+  font-size: 14px;
 }
 .edit-btn{
-  border: 1px solid #acacac;
+  background-color: #09bdee;
+  color: #fff;
+  border-radius: 50%;
   text-align: center;
-  font-size: 11px;
-  width: 40rpx;
-  height: 40rpx;
-  line-height: 40rpx;
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  font-size: 20px;
+}
+.edit-num{
+  width: 70rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border: 1px solid #d2d2d4;
+  margin: 0 12rpx;
+  text-align: center;
 }

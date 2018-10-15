@@ -69,6 +69,7 @@ App({
   globalData: {
     userInfo: null,
     cityId: 1,
+    city:'城市',
     shops: [],
     //总金额
     sum: 0,

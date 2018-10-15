@@ -1,7 +1,12 @@
 // pages/special/special.js
+import regeneratorRuntime, {
+  async
+} from '../apis/regenerator-runtime'
+const Home = require('../apis/Home')
 const service = require('../config.js').service
 const utils = require('../config.js').utils
 const app = getApp()
+
 Page({
 
   /**
@@ -49,7 +54,6 @@ Page({
   onShow: function () {
     let state = this.data.state
     let num = this.data.num
-    let cityId = app.globalData.cityId
     //购物车
     const self = this
     if (wx.getStorageSync("token")) {
@@ -60,17 +64,12 @@ Page({
       let timer = setInterval(() => {
         if (app.globalData.isCom) {
           //获取商品goods
-          let header = {};
-          if (wx.getStorageSync('token')) {
-            header = {
-              'Authorization': 'Bearer ' + wx.getStorageSync('token')
-            }
-          }
-          utils.getData(self, service.selectStateGoods, 'goods', {
-            state,
-            num,
-            cityId
-          }, header)
+          !(async () => {
+            const goods = await Home.getSpecial(state, num)
+            self.setData({
+              goods,
+            })
+          })()
           self.getShoppingCar()
           wx.hideLoading()
           app.globalData.isCom = false
@@ -78,12 +77,14 @@ Page({
         }
       }, 100)
     }else{
-      utils.getData(self, service.selectStateGoods, 'goods', {
-        state,
-        num,
-        cityId
-      })
+      !(async () => {
+        const goods = await Home.getSpecial(state, num)
+        self.setData({
+          goods,
+        })
+      })()
     }
+
   },
 
   /**

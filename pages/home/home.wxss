@@ -1,6 +1,6 @@
 /* pages/freeze/home.wxss */
 #home{
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
 }
 /* 顶部搜索栏 */
@@ -9,9 +9,10 @@
   width: 80rpx;
 }
 /* banner轮播图 */
+.banner-swiper,
 .slide-image{
-  height: 37vh;
-  width: 100%;
+  width: 100vw;
+  height: 50vw;
 }
 /* 分类区 */
 .type{
@@ -24,7 +25,7 @@
   margin-top: 15rpx;
   width: 18vw;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
 }
 .type-icon{
   width: 14vw;
@@ -83,4 +84,7 @@
 .t-more{
   font-size: 12px;
   font-weight: 500;
+}
+.exchange{
+  /* padding: 0 20rpx; */
 }

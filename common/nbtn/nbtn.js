@@ -46,14 +46,12 @@ Component({
       let indexOfShops = -1;
       if (mode == 1) {
         //加1         
-        properties.good.num--
-        if (properties.good.num <= -1) {
+        if (properties.good.num < properties.good.buyNum + 1) {
           wx.showToast({
             title: '抱歉，库存不足',
             icon: 'none',
             duration: 1000
           })
-          properties.good.num++
           return
         } 
         properties.good.buyNum++   
@@ -89,9 +87,6 @@ Component({
         }
       } else if (mode == 0) {
         //减1
-        console.log(properties.good.num);
-        
-        properties.good.num++
         properties.good.buyNum--
         app.globalData.total--
         app.globalData.sum -= properties.good.price

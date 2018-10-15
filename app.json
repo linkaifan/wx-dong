@@ -27,7 +27,7 @@
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
+        "text": "商城",
         "iconPath": "assets/home.png",
         "selectedIconPath": "assets/home-1.png"
       },

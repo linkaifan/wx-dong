@@ -2,11 +2,12 @@
 <view class="good">
     <view class="box">
     <view class="df">
-      <image src="{{good.pictures[0]}}" class="box-img"  catchtap="toDetail"/>
+      <image src="{{good.pictures[0]}}" mode="aspectFit"
+      class="box-img"  catchtap="toDetail"/>
       <view class="t-left">
-        <text class="t-bold h50">{{good.name}}</text>
-        <text class="t-bold h50"></text>
-        <text class="t-bold h50"></text>
+        <text class="t-bold h50 t-big">{{good.name}}</text>
+        <text class="h50"></text>
+        <text class="h50"></text>
       </view>
     </view>
     <view wx:for="{{good.price}}" wx:key="{{index}}">
@@ -14,7 +15,7 @@
         <text class="h50">{{item.value}}</text>
         <view class="df-sb">
           <view class="t-left">
-            <text class="h50">{{item.weight}}</text>
+            <text class="h50 t-nowrap">{{item.weight}}</text>
             <text class="h50 t-red"> ￥{{item.price}}/{{item.unit}}</text>
           </view>        
           <nbtn good="{{item}}" goodid="{{good.id}}" bind:updata="updata"></nbtn>

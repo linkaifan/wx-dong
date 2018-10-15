@@ -25,7 +25,6 @@ Page({
     self.setData({
       token: wx.getStorageSync('token')
     })
-    this.getShoppingCar()
     utils.getData(this, service.selectDefaultAddress, 'address', {}, {
       'Authorization': 'Bearer ' + self.data.token
     })
@@ -46,24 +45,29 @@ Page({
       title: '加载中',
       mask: true
     })
-    setTimeout(() => {
-      this.getShoppingCar()
-      wx.hideLoading()
-    }, 1000);
+    const self = this
+    let timer = setInterval(()=>{
+      if (app.globalData.isCom) {
+        self.getShoppingCar()
+        wx.hideLoading()
+        app.globalData.isCom = false
+        clearInterval(timer)      
+      }
+    },100)
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    app.globalData.isCom = true
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    app.globalData.isCom = true
   },
 
   /**
@@ -163,6 +167,33 @@ Page({
         if (res.statusCode == 400) {
           wx.showToast({
             title: '收货地址与下单城市不一致，请切换配送地址',
+            icon: 'none',
+            duration: 1500,
+            wrap: true
+          }) 
+          return               
+        }
+        if (res.statusCode == 401) {
+          wx.showToast({
+            title: '订单里无商品，请添加商品',
+            icon: 'none',
+            duration: 1500,
+            wrap: true
+          }) 
+          return               
+        }
+        if (res.statusCode == 402) {
+          wx.showToast({
+            title: '抱歉，订单中商品库存不足',
+            icon: 'none',
+            duration: 1500,
+            wrap: true
+          }) 
+          return               
+        }
+        if (res.statusCode == 403) {
+          wx.showToast({
+            title: '抱歉，订单中含已下架商品',
             icon: 'none',
             duration: 1500,
             wrap: true

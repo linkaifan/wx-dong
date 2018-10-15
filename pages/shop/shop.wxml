@@ -10,38 +10,35 @@
       <view class="line"></view>
       <view class="box-contain df">
         <view class="con-left df">
-          <checkbox-group bindchange="checkboxChange"  data-i="{{index}}">
+          <checkbox-group bindchange="checkboxChange" data-i="{{index}}">
             <label>
-              <checkbox  checked="{{item.isCheck}}" color="#fe0000" />
+              <checkbox checked="{{item.isCheck}}" color="#fe0000" />
             </label>
           </checkbox-group>
           <image src="{{item.goods.picture}}" class="shop-img" />
         </view>
         <view class="con-right">
-          <view>{{item.goods.name}}</view>
+          <view class="t-big t-bold">{{item.goods.name}}</view>
           <view class="weight">
             <text>{{item.price.weight}}</text>
           </view>
           <view class="df-sb">
             <text class="t-red">{{item.price.price}}元</text>
             <view class="btn-box">
-              <view class="edit-btn" bindtap="editNum" data-mode="1" 
-              data-i="{{index}}">+</view>
+              <view class="edit-btn t-big" bindtap="editNum" data-mode="0" 
+              hidden="{{item.price.buyNum == 0}}" data-i="{{index}}">-</view>
               <view class="edit-btn" hidden="{{item.price.buyNum == 0}}">
                 {{item.price.buyNum}}
               </view>
-              <view class="edit-btn" bindtap="editNum" data-mode="0" 
-              hidden="{{item.price.buyNum == 0}}" data-i="{{index}}">
-                -
-              </view>
+              <view class="edit-btn t-big" bindtap="editNum" data-mode="1" data-i="{{index}}">+</view>
             </view>
           </view>
         </view>
       </view>
     </view>
     <view hidden="{{!(shops.length==0)}}" class="no-shops">
-      <navigator url="../home/home" open-type="switchTab" class="toBtn">去购物</navigator>
-      <text class="h50">购物车竟然是空的！</text>     
+      <navigator url="../home/home" open-type="switchTab" class="toBtn">立刻购买</navigator>
+      <text class="h50">购物车竟然是空的！</text>
     </view>
   </view>
   <view class="bar df-sb">

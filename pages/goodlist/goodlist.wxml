@@ -8,5 +8,4 @@
     <good wx:for="{{goods}}" good="{{item}}" wx:key="id" bind:updata="updata"></good>
   </view>
   <shopbar sum="{{sum}}" total="{{total}}"></shopbar>
-
 </view>

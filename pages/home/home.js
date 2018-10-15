@@ -1,7 +1,9 @@
 // pages/freeze/home.js
-const service = require('../config.js').service
-const utils = require('../config.js').utils
 const app = getApp()
+import regeneratorRuntime, {
+  async
+} from '../apis/regenerator-runtime'
+const Home = require('../apis/Home')
 Page({
 
   /**
@@ -11,10 +13,10 @@ Page({
     inputShowed: false,
     inputVal: "",
     banners: [],
-    citys:[],
+    citys: [],
     //暂时默认海口id1
-    cityId:1,
-    city:'城市',
+    cityId: 1,
+    city: '城市',
     types: [{
         src: "../../assets/home/z1.png",
         name: "鸭副类",
@@ -60,8 +62,8 @@ Page({
         bigTypeId: "15"
       }
     ],
-    discounts:[],
-    recommendations:[]
+    discounts: [],
+    recommendations: []
 
   },
 
@@ -69,12 +71,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const self = this
+    const cityId = this.data.cityId
+    //异步并行获取banners,citys,推荐区recommendations,促销区discounts
+    app.globalData.cityId = cityId
+    !(async () => {
+      const [citys, banners, discounts, recommendations] =
+      await Promise.all([Home.getCity(), Home.getBannerPicture(),
+        Home.getDiscounts(0), Home.getRecommendations(0),
+      ])
+      self.setData({
+        citys,
+        banners,
+        discounts,
+        recommendations
+      })
+    })();
+
     //提醒用户设置城市id
     if (wx.getStorageSync('cityId')) {
       this.setData({
-        cityId: wx.getStorageSync('cityId')
+        cityId: wx.getStorageSync('cityId'),
+        city: wx.getStorageSync('city') || '城市'
       })
-    }else{
+      app.globalData.cityId = wx.getStorageSync('cityId')
+    } else {
       wx.showToast({
         title: '请点击左上角选择城市',
         icon: 'none',
@@ -82,27 +103,6 @@ Page({
         mask: true
       })
     }
-    let self = this
-    let cityId = this.data.cityId
-    app.globalData.cityId = cityId 
-    //获取banners,citys,推荐区recommendations,促销区discounts
-    utils.getData(this,service.getBannerPicture,'banners',{cityId})
-    utils.getData(this,service.getCity,'citys',{},{},function () {
-      self.data.citys.forEach(arr => {
-        if (arr.id == self.data.cityId) {
-          self.setData({
-            city:arr.city
-          })
-        }
-      });
-    })
-    utils.getData(this,service.selectStateGoods,'discounts',{
-      cityId,state:3,num:0
-    })
-    utils.getData(this,service.selectStateGoods,'recommendations',{
-      cityId,state:2 ,num:0
-    })
-       
   },
 
   /**
@@ -115,8 +115,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { 
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -174,42 +173,44 @@ Page({
       inputVal: e.detail.value
     });
   },
-  //搜索框
-  bindPickerChange: function(e) {
-    let i =  e.detail.value
+  //城市选择
+  bindPickerChange: function (e) {
+    let i = e.detail.value
     console.log('城市picker发送选择改变，cityId为', this.data.citys[i].id)
     this.setData({
-      city:this.data.citys[i].city,
-      cityId:this.data.citys[i].id
+      city: this.data.citys[i].city,
+      cityId: this.data.citys[i].id
     })
     wx.setStorageSync('cityId', this.data.cityId)
-    app.globalData.cityId = this.data.cityId   
+    wx.setStorageSync('city', this.data.city)
+    app.globalData.cityId = this.data.cityId
+    app.globalData.city = this.data.city
     wx.reLaunch({
       url: 'home'
-    }) 
-  },
-  search(){
-    wx.navigateTo({
-      url: '../goodlist/goodlist?search='+this.data.inputVal
     })
   },
-  toType(e){
+  search() {
+    wx.navigateTo({
+      url: '../goodlist/goodlist?search=' + this.data.inputVal
+    })
+  },
+  toType(e) {
     let i = e.currentTarget.dataset.i
     let bigTypeId = this.data.types[i].bigTypeId
     wx.navigateTo({
-      url: '../type/type?bigTypeId='+bigTypeId
-    })   
+      url: '../type/type?bigTypeId=' + bigTypeId
+    })
   },
-  more(e){
+  more(e) {
     let state = e.currentTarget.dataset.state
     wx.navigateTo({
-      url: '../special/special?state='+state
-    })   
+      url: '../special/special?state=' + state
+    })
   },
-  toDetail(e){
+  toDetail(e) {
     let goodid = e.currentTarget.dataset.goodid
     wx.navigateTo({
-      url: '../detail/detail?goodsId='+goodid
-    })  
+      url: '../detail/detail?goodsId=' + goodid
+    })
   }
 })

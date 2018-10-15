@@ -1,7 +1,7 @@
 <!-- common/nbtn/nbtn.wxml -->
 <view class="btn-box">
-  <view class="edit-btn" bindtap="edit" data-mode="1">+</view>
-  <view class="edit-btn" hidden="{{good.buyNum == 0}}">{{good.buyNum}}</view>
   <view class="edit-btn" bindtap="edit" data-mode="0" 
-  hidden="{{good.buyNum == 0}}">-</view>
+  hidden="{{good.buyNum == 0}}">-</view>  
+  <view class="edit-num" hidden="{{good.buyNum == 0}}">{{good.buyNum}}</view>
+  <view class="edit-btn" bindtap="edit" data-mode="1">+</view>
 </view>

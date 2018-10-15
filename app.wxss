@@ -25,6 +25,9 @@
 .t-gray{
   color: #808080;
 }
+.t-big{
+  font-size: 17px;
+}
 .df{
   display: flex;
   align-items: center;
@@ -40,7 +43,7 @@
   justify-content: space-around;  
 }
 .t-bold{
-  font-weight: 600;
+  font-weight: 700;
 }
 .h50{
   height: 50rpx;
